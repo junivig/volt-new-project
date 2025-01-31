@@ -8,8 +8,11 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         .top-section {
-            height: 30vh;
-            background-color: #3498db; /* Blue background instead of image */
+            height: 40vh;
+            background-image: url('assets/img/bg-mountain.png');
+            background-size: cover;
+            background-color: rgba(53, 155, 65, 0.7); /* Light green with 50% transparency */
+            background-blend-mode: overlay;
             position: relative;
             display: flex;
             align-items: center;
@@ -18,32 +21,46 @@
             font-size: 1.5rem;
         }
         .back-button {
-            position: absolute;
-            left: 20px;
-            top: 20px;
+            position: absolute; 
+            left: 30px;
+            top: 10vh;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1rem;
+            text-decoration: underline;
         }
         .tabs-container {
             position: relative;
-            display: flex;
             justify-content: center;
-            margin-top: -50px; /* Moves buttons up */
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: -8vh;
             z-index: 10;
         }
-        .tab-button {
-            width: 120px;
+        .tab-button.active {
+            width: 180px;
             height: 120px;
-            background-color: #fff;
-            border: 2px solid #ccc;
-            border-radius: 10px;
+            background-color: #F2F2F2;
+            border: 2px solid #518F2B;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 0 10px;
             font-size: 1rem;
             font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tab-button {
+            width: 180px;
+            height: 120px;
+            background-color: #F2F2F2;
+            border: 2px solid #F2F2F2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -52,42 +69,141 @@
             margin-bottom: 5px;
         }
         .content-section {
-            padding: 20px;
             display: none;
         }
         .content-section.active {
             display: block;
         }
+        .btn-light-green {
+            background-color: #BCD531 !important;
+            color: white !important;
+            font-size: small;
+            padding: 5px 40px;
+            border-radius: 40px;
+        }
+        .btn-light-gray {
+            background-color: #F2F2F2 !important;
+            color: #BCD531 !important;
+            font-size: small;
+            padding: 5px 40px;
+            border-radius: 40px;
+            margin-right: 10px;
+        }
+        .form-control {
+            padding: 10px 20px;
+            color: grey !important;
+        }
+        .privacy-text {
+            color: black;
+            font-size: large;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .icon-size {
+            width: 35px;
+            height: 35px;
+            margin-bottom: 5px;
+        }
+        .table th {
+            font-weight: bold;
+        }
+        .order-id {
+            color: green;
+            text-decoration: none;
+        }
+        .btn-view {
+            background-color: #c4d82e;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            padding: 5px 15px;
+        }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column">
     <div class="top-section">
-        <a href="#" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        <a href="index.html" class="back-button"><p class="back-button">Back</p></a>
         <h1>MY ACCOUNT</h1>
     </div>
-    <div class="tabs-container">
-        <div class="tab-button" onclick="showSection('address')">
-            <i class="fas fa-map-marker-alt"></i>
-            Address
+    <div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="tabs-container">
+            <div class="tab-button" onclick="showSection('orders')">
+                <img src="assets/img/ic-orders.png" alt="Order Icon" class="icon-size"/>
+                Orders
+            </div>
+            <div class="tab-button" onclick="showSection('edit-account')">
+                <img src="assets/img/ic-edit-account.png" alt="Edit Icon" class="icon-size"/>
+                Edit Account
+            </div>
+            <div class="tab-button" onclick="showSection('address')">
+                <img src="assets/img/ic-location.png" alt="Location Icon" class="icon-size"/>
+                Address
+            </div>
+            <div class="tab-button" onclick="showSection('logout')">
+                <img src="assets/img/ic-logout.png" alt="Logout Icon" class="icon-size"/>
+                Logout
+            </div>
         </div>
-        <div class="tab-button" onclick="showSection('edit-account')">
-            <i class="fas fa-user-edit"></i>
-            Edit Account
-        </div>
-        <div class="tab-button" onclick="showSection('orders')">
-            <i class="fas fa-box"></i>
-            Orders
-        </div>
-        <div class="tab-button" onclick="showSection('logout')">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
+        <div class="container mt-5">
+            <div id="orders" class="content-section active">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Orders</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#" class="order-id">#965</a></td>
+                                <td>September 24, 2020</td>
+                                <td>on hold</td>
+                                <td><strong>114.40$</strong> for 4 items</td>
+                                <td><button class="btn btn-view">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="order-id">#964</a></td>
+                                <td>September 24, 2020</td>
+                                <td>on hold</td>
+                                <td><strong>12.50$</strong> for 1 item</td>
+                                <td><button class="btn btn-view">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="address" class="content-section">
+                <p class="privacy-text">Address 1: 1234 Al-Madina Street, Al-Saif District, Riyadh 11564, Saudi Arabia</p>
+                <p class="privacy-text">Address 1: 1234 Al-Madina Street, Al-Saif District, Riyadh 11564, Saudi Arabia</p>
+            </div>
+            <div id="edit-account" class="content-section">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="login-username" placeholder="Enter username">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="login-password" placeholder="New password">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="login-password-verify" placeholder="Confirm password">
+                        </div>
+                        <button type="submit" class="btn btn-light-green">Save Changes</button>
+                    </form>
+            </div>
+            <div id="logout" class="content-section">
+                <p class="privacy-text">Are you sure you want to logout?</p>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-light-gray">No</button>
+                    <button type="submit" class="btn btn-light-green">Yes</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container mt-4">
-        <div id="address" class="content-section active">Address Content</div>
-        <div id="edit-account" class="content-section">Edit Account Content</div>
-        <div id="orders" class="content-section">Orders Content</div>
-        <div id="logout" class="content-section">Logout Content</div>
     </div>
     <script>
         function showSection(sectionId) {
