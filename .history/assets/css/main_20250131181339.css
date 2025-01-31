@@ -2442,26 +2442,3 @@ cart-table {
   border-radius: 20px;
   padding-left: 20px;
 }
-.coupon-section {
-  background: #6A6A6A;
-  padding: 10px;
-  font-size: 14px;
-  color: #fff;
-  margin-top: 6px;
-  padding-top: 20px;
-
-}
-.checkout-container {
-  padding: 20px;
-  background: #fff;
-}
-.table img {
-  width: 30px;
-  height: auto;
-}
-.form-control, .form-select {
-  border-radius: 5px;
-}
-td {
-  color: #A7A7A7 !important;
-}

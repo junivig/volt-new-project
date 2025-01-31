@@ -2443,13 +2443,9 @@ cart-table {
   padding-left: 20px;
 }
 .coupon-section {
-  background: #6A6A6A;
+  background: #ddd;
   padding: 10px;
   font-size: 14px;
-  color: #fff;
-  margin-top: 6px;
-  padding-top: 20px;
-
 }
 .checkout-container {
   padding: 20px;

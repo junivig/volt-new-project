@@ -2387,7 +2387,7 @@ cart-table {
   background-color: #cddc39;
   color: #fff;
   border: none;
-  padding: 8px 20px;
+  padding: 8px 15px;
   border-radius: 20px;
   font-weight: 600;
 }
@@ -2427,10 +2427,9 @@ cart-table {
 }
 .proceed-btn {
   background-color: #cddc39;
-  font-weight: 600;
+  font-weight: bold;
   padding: 10px 20px;
   border: none;
-  color: #fff;
   border-radius: 5px;
 }
 .proceed-btn:hover {
@@ -2441,27 +2440,4 @@ cart-table {
   width: 30%;
   border-radius: 20px;
   padding-left: 20px;
-}
-.coupon-section {
-  background: #6A6A6A;
-  padding: 10px;
-  font-size: 14px;
-  color: #fff;
-  margin-top: 6px;
-  padding-top: 20px;
-
-}
-.checkout-container {
-  padding: 20px;
-  background: #fff;
-}
-.table img {
-  width: 30px;
-  height: auto;
-}
-.form-control, .form-select {
-  border-radius: 5px;
-}
-td {
-  color: #A7A7A7 !important;
 }
