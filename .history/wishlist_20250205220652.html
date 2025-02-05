@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Checkout- Voltfood</title>
+  <title>Wishlist - Voltfood</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -111,92 +111,78 @@
   <main class="main">
 
 
-        <!-- Checkout Section -->
-        <section id="testimonials" class="testimonials section-inner light-background bg-image">
-          <div class="container mt-4">
-            <div class="coupon-section">
-                <p>Have a coupon? Click here to enter your code</p>
-            </div>
+        <!-- Cart Section -->
+        <section id="testimonials" class="testimonials section light-background bg-image">
+          <div class="container mt-5">
+            <h3>Wishlist</h3>
+            <table class="table wishlist-table  mt-4">
+                <thead class="border-bottom">
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th></th>
+                        <th></th>
+                        <th>Product Name</th>
+                        <th>Unit Price</th>
+                        <th>Date Added</th>
+                        <th>Stock Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><button class="btn-remove">&times;</button></td>
+                        <td><img src="assets/img/breakfast.png" alt="Image"></td>
+                        <td> Apple Juice</td>
+                        <td>$11.05</td>
+                        <td>27 Jan, 2025</td>
+                        <td>Stock</td>
+                        <td><button class="btn btn-cart">Add to cart</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <td><button class="btn-remove">&times;</button></td>
+                      <td><img src="assets/img/breakfast.png" alt="Image"></td>
+                      <td> Apple Juice</td>
+                      <td>$11.05</td>
+                      <td>27 Jan, 2025</td>
+                      <td>Stock</td>
+                      <td><button class="btn btn-cart">Add to cart</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox"></td>
+                    <td><button class="btn-remove">&times;</button></td>
+                    <td><img src="assets/img/breakfast.png" alt="Image"></td>
+                    <td> Apple Juice</td>
+                    <td>$11.05</td>
+                    <td>27 Jan, 2025</td>
+                    <td>Stock</td>
+                    <td><button class="btn btn-cart">Add to cart</button></td>
+                </tr>
+                </tbody>
+            </table>
         
-            <div class="checkout-container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <h5>Billing Details</h5>
-                        <form>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="First Name" value="">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Last Name" value="">
-                                </div>
-                            </div>
-                            <input type="text" class="form-control mb-3" placeholder="Company Name" value="">
-                            <input type="text" class="form-control mb-3" placeholder="Phone Number" value="">
-                            <input type="email" class="form-control mb-3" placeholder="Email" value="">
-        
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <select class="form-select">
-                                        <option selected>Saudi Arabia</option>
-                                        <option selected>Qatar</option>
-                                        <option selected>Egypt</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-select">
-                                        <option selected>Cairo</option>
-                                        <option selected>Cairo</option>
-                                        <option selected>Cairo</option>
-                                    </select>
-                                </div>
-                            </div>
-        
-                            <input type="text" class="form-control mb-3" placeholder="Street Address" value="">
-                            <input type="text" class="form-control mb-3" placeholder="City" value="">
-                            <input type="text" class="form-control mb-3" placeholder="State" value="">
-                            <input type="text" class="form-control mb-3" placeholder="Zip Code" value="">
-                        </form>
-                    </div>
-        
-                    <div class="col-md-5">
-                        <h5>Additional Information</h5>
-                        <textarea class="form-control" rows="4" placeholder="Order Notes (Optional)"></textarea>
-                    </div>
+            <div class="wishlist-actions d-flex justify-content-between">
+                <select class="form-select w-25">
+                    <option>Actions</option>
+                </select>
+                <div>
+                    <button class="btn btn-cart">Apply Actions</button>
+                    <button class="btn btn-cart">Add selection to Cart</button>
+                    <button class="btn btn-cart">Add all to Cart</button>
                 </div>
-        
-                <h5 class="mt-4">Your Order</h5>
-                <table class="table table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Image</th>
-                            <th>Product Name</th>
-                            <th>Price/Unit</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="assets/img/breakfast.png" alt="Image"></td>
-                            <td>Apple Juice</td>
-                            <td>$11.05</td>
-                            <td>1</td>
-                            <td>$11.05</td>
-                        </tr>
-                        <tr>
-                            <td><img src="assets/img/breakfast.png" alt="Image"></td>
-                            <td>Apple Juice</td>
-                            <td>$11.05</td>
-                            <td>1</td>
-                            <td>$11.05</td>
-                        </tr>
-                    </tbody>
-                </table>
+            </div>
+            <div class="row" style="float: right;">
+              <div class="social-links d-flex text-end mt-3">
+                <a href=""><img src="assets/img/facebook.png" alt="Logo Image"></a>
+                <a href=""><img src="assets/img/twitter.png" alt="Logo Image"></a>
+                <a href=""><img src="assets/img/linkedin.png" alt="Logo Image"></i></a>
+                <a href=""><img src="assets/img/youtube.png" alt="Logo Image"></i></a>
+              </div>
             </div>
         </div>
         </section>
-      <!-- /Checkout Section -->
+      <!-- /Cart Section -->
 
 
   </main>

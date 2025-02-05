@@ -2514,3 +2514,168 @@ th {
   font-size: 14px;
   border: none;
 }
+.privacy-heading
+{
+   color: #000;
+   font-size: 18px;
+   font-weight: 500;
+}
+.privacy-heading-arabic
+{
+  color: #000;
+  font-size: 22px;
+  font-weight: 600;
+}
+.privacy-text-arabic
+{
+  color: #5b5454;
+  font-size: 18px;
+  font-weight: 400;
+}
+.privacy-text
+{
+   color: #5b5454;
+   font-size: 16px;
+   margin-bottom: 0px;
+}
+.vision-heading
+{
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 70px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color:#000;
+  font-family: 'Poppins', sans-serif;
+}
+.heading-main-color
+{
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 70px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  color: #B6D63C;
+  font-family: 'Poppins', sans-serif;
+}
+.faq-icon-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.contact-page-form-div
+{
+  width: 100%;
+  margin: 0% auto;
+  padding: 5%;
+  background-color: #fff;
+  border-radius: 15px;
+  background: #fff url('../assets/img/popup-card-bg.png') no-repeat right top; 
+  background-size: 46%;
+}
+textarea {
+  display: block;
+  width: 100%; 
+  padding: 10px 40px 0 20px; 
+  border-radius: 10px;
+  background: #EBEBEB ;
+  background-size: 20px 20px; 
+  border: 1px solid #C0C0C0;
+  line-height: 20px;
+  font-size: 14px;
+}
+.btn-send-message
+{
+  color: #fff;
+  width: 100%;
+    background-color: #FF892B;
+    border-color: #FF892B;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+.btn-save:send-message
+{
+  color: #fff;
+  background-color: #000;
+  border-color: #000;
+}
+.contact-heading
+{
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color:#000;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sub-heading-main-color
+{
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  color: #B6D63C;
+  font-family: 'Poppins', sans-serif;
+}
+
+.phone-text
+{
+  color: #000;
+  font-size: 14px;
+}
+.email-text
+{
+  color: #000;
+  font-size: 14px;
+}
+.map-location
+{
+  border-radius: 10px;
+}
+.email-field
+{
+  width: 100%;
+  color: #000;
+  border: 1px solid #C0C0C0;
+  background: #EBEBEB url('../assets/img/email-icon-group.png') no-repeat right 10px center; 
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 32px; 
+  line-height: 30px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  border-radius: 35px;
+}
+input[type="text"] {
+  display: block;
+  width: 100%;
+  height: 40px; 
+  padding: 0 40px 0 20px; 
+  border-radius: 20px;
+  background: #EBEBEB; 
+  background-size: 20px 20px; 
+  border: 1px solid #C0C0C0;
+  line-height: 20px;
+}
+input[type="tel"] {
+  display: block;
+  width: 100%;
+  height: 40px; 
+  padding: 6px 40px 0 20px; 
+  border-radius: 20px;
+  background: #EBEBEB url('../assets/img/call-icon.png') no-repeat right 10px center; 
+  background-size: 20px 20px; 
+  border: 1px solid #C0C0C0;
+  line-height: 20px;
+}
