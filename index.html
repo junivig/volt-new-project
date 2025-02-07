@@ -80,8 +80,11 @@
           <li><a href="index.html" class="active">HOMEPAGE</a></li>
           <li><a href="about.html">ABOUT US</a></li>
           <li><a href="menu.html">MENU</a></li>
+          <li><a href="meal-packages.html">MEAL PACKAGES</a></li>
           <li><a href="wishlist.html">WISHLIST</a></li>
           <li><a href="cart.html">MY CART</a></li>
+          <li><a href="privacy-and-policy.html">PRIVACY & POLICY</a></li>
+          <li><a href="contact.html">CONTACT US</a></li>
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -1041,96 +1044,19 @@
   </main>
 
  <!-- /Subscribe Footer Section --> 
-<section class="bg-image">
-  <div class="footer-newsletter">
-    <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="col-lg-6">
-          <p class="footer-newsletter-sub-heading">Follow & Subscribe</p>
-          <h4 class="footer-newsletter-heading">Get to Update & New Food.</h4>
-          <p class="footer-newsletter-text">We are the best quality elementum integer enim neque volutpat ac. Morbi enim nunc
-            faucibus amet consectetur adipiscing elit duis tempus urna et pharetra pharetra.</p>
-            <div class="mt-4">
-            <a href="#about" class="subscribe-button">FOLLOW & SUBSCRIBE</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section><!-- /Subscribe Footer Section -->
+  <!-- Footer will be loaded here -->
+  <div id="footer-placeholder"></div>
 
-  <footer id="footer" class="footer">
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-3 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <img src="assets/img/logo.png" alt="Logo Image">
-          </a>
-          
-        </div>
+  <script>
+    // Load footer.html into the placeholder div
+    fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading footer:", error));
+</script>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4 class="footer-pages-heading">Restaurant</h4>
-          <ul>
-            <li> <a href="#">Home</a></li>
-            <li> <a href="about.html">About us</a></li>
-            <li> <a href="contact.html">Contact us</a></li>
-            <li> <a href="privacy-and-policy.html">Terms of service</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4 class="footer-pages-heading">Categories</h4>
-          <ul>            
-            <li> <a href="#">Menu Special</a></li>
-            <li> <a href="#">Menu Popular</a></li>
-            <li> <a href="#">Health Nutrition</a></li>
-            <li> <a href="#">Meat Inside</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4 class="footer-pages-heading">Useful Links</h4>
-          <ul>
-            <li> <a href="#">Payment & Tax</a></li>
-            <li> <a href="#">Trusted Quality</a></li>
-            <li> <a href="#">Promotion Week</a></li>
-            <li> <a href="#">Reservation</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-12">
-          <h4 class="footer-pages-heading">Loveit App is now Ready Search for all.</h4>
-          <p>Proin fermentum leo vel orci porta non pulvinar neque. <br> Pellentesque</p>
-          <div class="row">
-            <div class="col-lg-5 col-md-6 col-sm-12">
-              <img src="assets/img/android.png" alt="Google Play Image" class="mobile-app-image">
-           </div>
-           <div class="col-lg-5 col-md-6 col-sm-12">
-            <img src="assets/img/apple.png" alt="Apple Store Image" class="mobile-app-image">
-         </div>
-        </div>
-
-      </div>
-    </div>
-    </div>
-    <div class="row copyright mt-4">
-      <div class="row">
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <p class="mt-2">© 2025<span>Copyright All Rights Reserved</span></p>
-      </div>
-      <div class="col-lg-3 col-md-12 col-md-12">
-      </div>
-      <div class="col-lg-3 col-md-12 col-md-12 social-media-icons">
-        <div class="social-links d-flex text-end">
-          <a href=""><img src="assets/img/facebook.png" alt="Logo Image"></a>
-          <a href=""><img src="assets/img/twitter.png" alt="Logo Image"></a>
-          <a href=""><img src="assets/img/linkedin.png" alt="Logo Image"></i></a>
-          <a href=""><img src="assets/img/youtube.png" alt="Logo Image"></i></a>
-        </div>
-      </div>
-      </div>
-    </div>
-  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
