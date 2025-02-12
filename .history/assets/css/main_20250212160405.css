@@ -1558,7 +1558,6 @@ section-inner,
   color: #C4C4C4;
   font-weight: 400;
   font-size: 14px;
-  
 }
 
 /*--------------------------------------------------------------
@@ -2787,21 +2786,20 @@ a {
  
   text-decoration: none !important;
 }
-.toast-container
-{
-  position: fixed; 
-  bottom: 10px; 
-  right: 10px; 
-  z-index: 1000; 
-  background-color:#BCD531; 
-  color:#000; 
-  padding: 1%;
-  border-radius: 5px;
-  border: 2px solid #BCD531;
+.toast-container {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 100%;
+  pointer-events: none;
 }
-.timer {
-  font-size: 14px;
-  text-align: center;
-  font-weight: 400;
-  color: #000;
+.toast-container > :not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 85%;
+  transform: translateX(-50%);
+  z-index: 1000;
 }

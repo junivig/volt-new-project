@@ -22,10 +22,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <script src="assets/js/constant.js"></script>
-  <!-- Add Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  
     <style>
         .nav-tabs {
             display: flex;
@@ -162,26 +158,25 @@
         </div>
       </header>
       
-      <div class="container">
+    <div class="container">
         <div class="row justify-content-center mt-5 mb-4">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header text-center">
                         <ul class="nav nav-tabs" id="authTabs">
                             <li class="nav-item">
-                                <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login-form">Log In</a>
+                                <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login">Log In</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register-form">Register</a>
+                                <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register">Register</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body tab-content">
-                        <!-- Login Form -->
-                        <div class="tab-pane fade show active" id="login-form">
-                            <form id="loginForm">
+                        <div class="tab-pane fade show active" id="login">
+                            <form>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="login-email" placeholder="Enter Email">
+                                    <input type="text" class="form-control" id="login-username" placeholder="Enter username">
                                 </div>
                                 <div class="mb-3">
                                     <input type="password" class="form-control" id="login-password" placeholder="Enter password">
@@ -196,10 +191,8 @@
                                 </div>
                             </form>
                         </div>
-    
-                        <!-- Register Form -->
                         <div class="tab-pane fade" id="register-form">
-                            <form id="registerForm">
+                            <form>
                                 <div class="mb-3">
                                     <input type="text" class="form-control" id="register-username" placeholder="Enter username">
                                 </div>
@@ -210,8 +203,8 @@
                                     <input type="password" class="form-control" id="register-password" placeholder="Enter password">
                                 </div>
                                 <p class="privacy-text">Your personal data will be used to support your 
-                                    experience throughout this website, to manage access to your account, 
-                                    and for other purposes described in our <br/> <a href="#">Privacy Policy</a>.</p>
+                                  experience throughout this website, to manage access to your account, 
+                                  and for other purposes described in our <br/> <a href="#">Privacy Policy</a>.</p>
                                 <button type="submit" class="btn btn-light-green">Register</button>
                             </form>
                         </div>
@@ -220,119 +213,189 @@
             </div>
         </div>
     </div>
-    
-    <!-- Toast Container -->
-    <div id="toast-container" class="toast-container"></div>    
-   
-    <!-- API Implementation -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-    
-    
-        document.addEventListener('DOMContentLoaded', function () {
-            // Register Form Submission
-            const registerForm = document.getElementById('registerForm');
-    
-            registerForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-    
-                const username = document.getElementById('register-username').value.trim();
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
-    
-                if (!username || !email || !password) {
-                    showToast('All fields are required', 'error');
-                    return;
-                }
-    
-                const apiUrl = `${apiBaseUrl}users/register`;
-    
-                const data = { email, password, username };
-    
-                axios.post(apiUrl, data)
-                    .then((response) => {
-                        console.log(response.data);
-                        const userData = response.data.data.user;
-                        const accessToken = userData.accessToken;
-    
-                        if (accessToken) {
-                            localStorage.setItem('accessToken', accessToken);
-                            localStorage.setItem('user', JSON.stringify(userData));
-                            showToast('Registration successful!', 'success');
-    
-                            setTimeout(() => {
-                                window.location.href = 'index.html';
-                            }, 2000);
-                        } else {
-                            showToast('Registration unsuccessful!', 'error');
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Registration error:', error);
-                        const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
-                        showToast(`Registration failed: ${errorMessage}`, 'error');
-                    });
-            });
-    
-            // Login Form Submission
-            const loginForm = document.getElementById('loginForm');
-    
-            loginForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-    
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-    
-                if (!email || !password) {
-                    showToast('Both fields are required', 'error');
-                    return;
-                }
-    
-                const apiUrl = `${apiBaseUrl}users/login`;
-    
-                const data = { email, password };
-    
-                axios.post(apiUrl, data)
-                    .then((response) => {
-                        console.log(response.data);
-                        const userData = response.data.data.user;
-                        const accessToken = userData.accessToken;
-    
-                        if (accessToken) {
-                            localStorage.setItem('accessToken', accessToken);
-                            localStorage.setItem('user', JSON.stringify(userData));
-                            showToast('Login successful!', 'success');
-    
-                            setTimeout(() => {
-                                window.location.href = 'index.html';
-                            }, 2000);
-                        } else {
-                            showToast('Login failed: No access token received', 'error');
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Login error:', error);
-                        const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
-                        showToast(`Login failed: ${errorMessage}`, 'error');
-                    });
-            });
-    
-            // Toast Message Function
-            function showToast(message, type) {
-                const toastContainer = document.getElementById('toast-container');
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
-                toast.innerText = message;
-                toastContainer.appendChild(toast);
-    
-                setTimeout(() => { toast.classList.add('show'); }, 60);
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    toastContainer.removeChild(toast);
-                }, 4000);
+
+<!-- API Implementation -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select the form
+        const signupForm = document.getElementById('register-form');
+  
+        // Ensure the form element is found
+        if (!signupForm) {
+            console.error('Signup form not found');
+            return;
+        }
+  
+        // Add event listener for form submission
+        signupForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+  
+            // Get values from the form fields
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+  
+            // Ensure the fields exist
+            if (!username || !email || !password) {
+                showToast('All fields are required', 'error');
+                return;
             }
+  
+            // // Check if passwords match
+            // if (password !== confirmPassword) {
+            //     showToast('Passwords do not match', 'error');
+            //     return;
+            // }
+  
+            // API URL (Using global apiBaseUrl)
+            const apiUrl = `${apiBaseUrl}users/register`;
+  
+            // API request body
+            const data = {
+                email: email,
+                password: password,
+                username: 'defaultUsername' // Static or default username
+            };
+  
+            // Send data using Axios
+            axios
+                .post(apiUrl, data)
+                .then((response) => {
+                    console.log(response.data); // Handle success
+                    const userData = response.data.data.user; // Access the user object
+                  const accessToken = userData.accessToken; // Get access token from user object
+  
+                  // Log the access token for debugging
+                  console.log("Access Token:", accessToken); 
+  
+                  if (accessToken) {
+                      localStorage.setItem('accessToken', accessToken); // Store the token
+                      console.log("Token saved:", localStorage.getItem("accessToken")); 
+                      localStorage.setItem('user', JSON.stringify(userData)); // Store user data
+                    // Show success toast
+                    showToast('Registration successful!', 'success');
+  
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                  } else {
+                      showToast('Registration unsuccessful!', 'error');
+                  }
+              })
+                .catch((error) => {
+                    console.error('There was an error!', error);
+  
+                    // Show error toast
+                    if (error.response && error.response.data.message) {
+                        showToast(`Registration failed: ${error.response.data.message}`, 'error');
+                    } else {
+                        showToast('Registration failed. Please try again.', 'error');
+                    }
+                });
         });
-    </script>
+  
+        // Function to show toast messages
+        function showToast(message, type) {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+            toastContainer.appendChild(toast);
+  
+            // Show toast for 6 seconds
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 60);
+  
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toastContainer.removeChild(toast);
+            }, 4000);
+        }
+    });
+  </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+  const loginForm = document.getElementById('login-form');
+
+  if (!loginForm) {
+      console.error('Login form not found');
+      return;
+  }
+
+  loginForm.addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent default form submission
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+          showToast('Both fields are required', 'error');
+          return;
+      }
+
+      const apiUrl = `${apiBaseUrl}users/login`;
+
+      const data = {
+        email: email,
+          password: password
+      };
+
+      axios
+          .post(apiUrl, data)
+          .then((response) => {
+              console.log("Full API response:", response.data); // Log the full response
+              const userData = response.data.data.user; // Access the user object
+              const accessToken = userData.accessToken; // Get access token from user object
+
+              // Log the access token for debugging
+              console.log("Access Token:", accessToken); 
+
+              if (accessToken) {
+                  localStorage.setItem('accessToken', accessToken); // Store the token
+                  console.log("Token saved:", localStorage.getItem("accessToken")); 
+                  localStorage.setItem('user', JSON.stringify(userData)); // Store user data
+                  showToast('Login successful!', 'success');
+
+                  setTimeout(() => {
+                      window.location.href = 'index.html'; // Redirect to index.html
+                  }, 2000);
+              } else {
+                  showToast('Login failed: No access token received', 'error');
+              }
+          })
+          .catch((error) => {
+              console.error('There was an error!', error);
+
+              if (error.response && error.response.data.message) {
+                  showToast(`Login failed: ${error.response.data.message}`, 'error');
+              } else {
+                  showToast('Login failed. Please try again.', 'error');
+              }
+          });
+  });
+
+  function showToast(message, type) {
+      const toastContainer = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerText = message;
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => {
+          toast.classList.add('show');
+      }, 60);
+
+      setTimeout(() => {
+          toast.classList.remove('show');
+          toastContainer.removeChild(toast);
+      }, 4000);
+  }
+});
+
+</script>
 
        <!-- /Subscribe Footer Section --> 
   <!-- Footer will be loaded here -->

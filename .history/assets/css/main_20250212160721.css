@@ -1558,7 +1558,6 @@ section-inner,
   color: #C4C4C4;
   font-weight: 400;
   font-size: 14px;
-  
 }
 
 /*--------------------------------------------------------------
@@ -2798,10 +2797,4 @@ a {
   padding: 1%;
   border-radius: 5px;
   border: 2px solid #BCD531;
-}
-.timer {
-  font-size: 14px;
-  text-align: center;
-  font-weight: 400;
-  color: #000;
 }

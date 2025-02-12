@@ -779,14 +779,86 @@
               }
             }
           </script>
-        
-          <!-- Testimonials Container (Dynamic Content) -->
-          <div class="swiper-wrapper" id="testimonial-container">
-              <!-- Dynamic testimonials will be inserted here -->
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item" "="">
+                <div class="testimonial-item-bg">
+                  <p>
+                    <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
+                    <br><br>
+                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                  </p>
+                </div>
+                <img src="assets/img/testimonials/testimonials-1.png" class="testimonial-img" alt="">
+                <h3>Carrol Xenna</h3>
+                <h4>Designation</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="testimonial-item-bg">
+                  <p>
+                    <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
+                    <br><br>
+                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                  </p>
+                </div>
+                <img src="assets/img/testimonials/testimonials-2.png" class="testimonial-img" alt="">
+                <h3>Hanna Marriana</h3>
+                <h4>Designation</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="testimonial-item-bg">
+                  <p>
+                    <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
+                    <br><br>
+                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                  </p>
+                </div>
+                <img src="assets/img/testimonials/testimonials-3.png" class="testimonial-img" alt="">
+                <h3>Rendy Zennda</h3>
+                <h4>Designation</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="testimonial-item-bg">
+                  <p>
+                    <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
+                    <br><br>
+                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                  </p>
+                </div>
+                <img src="assets/img/testimonials/testimonials-1.png" class="testimonial-img" alt="">
+                <h3>Matt Brandon</h3>
+                <h4>Designation</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="testimonial-item-bg">
+                  <p>
+                    <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
+                    <br><br>
+                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                  </p>
+                </div>
+                <img src="assets/img/testimonials/testimonials-2.png" class="testimonial-img" alt="">
+                <h3>John Larson</h3>
+                <h4>Designation</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
           </div>
-          
           <div class="swiper-pagination"></div>
-      </div>
+        </div>
          <!-- /Cleint & Clients Section -->
          
          <div class="swiper init-swiper mt-5" data-speed="600" data-delay="5000" data-breakpoints="{ &quot;320&quot;: { &quot;slidesPerView&quot;: 1, &quot;spaceBetween&quot;: 40 }, &quot;1200&quot;: { &quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 40 } }">
@@ -1017,92 +1089,99 @@
 
 <!-- API Testimonial Implementation -->
 <script>
-  document.addEventListener("DOMContentLoaded", async function () {
-      const apiUrl = `${apiBaseUrl}testimonials`;
-      const token = localStorage.getItem("accessToken"); 
-      const testimonialContainer = document.getElementById("testimonial-container");
+  const apiUrl = `${apiBaseUrl}testimonials`;  
+  const token = localStorage.getItem("accessToken");  
 
-      if (!testimonialContainer) {
-          console.error("Error: testimonial-container not found.");
-          return;
-      }
+  // Get the Swiper wrapper where slides will be appended
+  const swiperWrapper = document.querySelector(".swiper-wrapper");
 
-      async function fetchTestimonials() {
-          try {
-              if (!token) {
-                  console.error("Error: No access token found!");
-                  testimonialContainer.innerHTML = "<p class='text-center text-danger'>Authorization required to view testimonials.</p>";
-                  return;
-              }
+  if (!swiperWrapper) {
+      console.error("Error: Swiper wrapper not found.");
+  }
 
-              const response = await fetch(apiUrl, {
-                  method: "GET",
-                  headers: {
-                      "Content-Type": "application/json",
-                      "Accept": "application/json",
-                      "Authorization": `Bearer ${token}`
-                  }
-              });
-
-              const data = await response.json();
-              if (data.status === 200) {
-                  renderTestimonials(data.data.testimonials);
-              } else {
-                  console.error("Failed to fetch testimonials:", data.message);
-                  testimonialContainer.innerHTML = "<p>Unable to load testimonials at the moment.</p>";
-              }
-          } catch (error) {
-              console.error("Error fetching testimonials:", error);
-              testimonialContainer.innerHTML = "<p>An error occurred while loading testimonials.</p>";
+  // Fetch testimonials from API
+  async function fetchTestimonials() {
+      try {
+          if (!token) {
+              console.error("Error: No access token found!");
+              return;
           }
-      }
 
-      function renderTestimonials(testimonials) {
-          testimonialContainer.innerHTML = ""; // Clear existing content
-
-          testimonials.forEach(testimonial => {
-              const testimonialHtml = `
-                  <div class="swiper-slide">
-                      <div class="testimonial-item">
-                          <div class="testimonial-item-bg">
-                              <p>
-                                  <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
-                                  <br><br>
-                                  <span>${testimonial.message}</span>
-                              </p>
-                          </div>
-                          <img src="${testimonial.image}" class="testimonial-img" alt="">
-                          <h3>${testimonial.name}</h3>
-                          <h4>${testimonial.designation}</h4>
-                      </div>
-                  </div>
-              `;
-              testimonialContainer.innerHTML += testimonialHtml;
+          const response = await axios.get(apiUrl, {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'Authorization': `Bearer ${token}` 
+              }
           });
 
-          // Reinitialize Swiper after dynamically adding slides
-          setTimeout(() => {
-              new Swiper(".init-swiper", {
-                  loop: true,
-                  speed: 600,
-                  autoplay: { delay: 5000 },
-                  slidesPerView: "auto",
-                  pagination: {
-                      el: ".swiper-pagination",
-                      type: "bullets",
-                      clickable: true
-                  },
-                  breakpoints: {
-                      320: { slidesPerView: 1, spaceBetween: 40 },
-                      1200: { slidesPerView: 3, spaceBetween: 20 }
-                  }
-              });
-          }, 500);
+          if (response.data.status === 200) {
+              renderTestimonials(response.data.data);
+          } else {
+              console.error("Failed to fetch testimonials:", response.data.message);
+          }
+      } catch (error) {
+          console.error("Error fetching testimonials:", error.response?.data || error.message);
       }
+  }
 
-      // Fetch testimonials on page load
-      fetchTestimonials();
-  });
+  // Render testimonials dynamically
+  function renderTestimonials(testimonials) {
+      swiperWrapper.innerHTML = ""; // Clear existing slides
+
+      testimonials.forEach(item => {
+          const testimonialHtml = `
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <div class="testimonial-item-bg">
+                          <p>
+                              <img src="assets/img/testimonials/testimonial-symbol.png" class="image-fluid" alt="">
+                              <br><br>
+                              <span>${item.message}</span>
+                          </p>
+                      </div>
+                      <img src="${item.image}" class="testimonial-img" alt="">
+                      <h3>${item.name}</h3>
+                      <h4>${item.designation}</h4>
+                  </div>
+              </div>
+          `;
+          swiperWrapper.innerHTML += testimonialHtml;
+      });
+
+      // Reinitialize Swiper after dynamically adding slides
+      initSwiper();
+  }
+
+  // Initialize Swiper
+  function initSwiper() {
+      new Swiper(".init-swiper", {
+          loop: true,
+          speed: 600,
+          autoplay: {
+              delay: 5000
+          },
+          slidesPerView: "auto",
+          pagination: {
+              el: ".swiper-pagination",
+              type: "bullets",
+              clickable: true
+          },
+          breakpoints: {
+              320: {
+                  slidesPerView: 1,
+                  spaceBetween: 40
+              },
+              1200: {
+                  slidesPerView: 3,
+                  spaceBetween: 20
+              }
+          }
+      });
+  }
+
+  // Initial fetch
+  fetchTestimonials();
 </script>
 
   <!-- Scroll Top -->
