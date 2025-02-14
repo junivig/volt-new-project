@@ -521,213 +521,143 @@
       </div>
 
     </section><!-- /News Section -->
-     
-
-   <!-- Toast Container -->
-   <div id="toast-container" class="toast-container"></div>  
-   
 
   </main>
 
-<!-- Products Fetch API Implementation -->
+
  <!-- Products Fetch API Implementation -->
 <script>
 
-const menuApiUrl = `${apiBaseUrl}food-categories`;
-const cartApiUrl = `${apiBaseUrl}cart/add`;
-const wishlistApiUrl = `${apiBaseUrl}wishlist/add`;
-const token = localStorage.getItem("accessToken");
+  const menuApiUrl = `${apiBaseUrl}food-categories`;
+  const cartApiUrl = `${apiBaseUrl}cart/add`;
+  const token = localStorage.getItem("accessToken");
 
-// Function to show toast notifications
-function showToast(message, type = "success") {
-    const toastContainer = document.getElementById("toast-container");
-    if (!toastContainer) {
-        console.error("Toast container not found!");
-        return;
-    }
+  // Function to fetch and display the menu
+  async function fetchMenu() {
+      if (!token) {
+          console.error("Access token not found!");
+          return;
+      }
 
-    const toast = document.createElement("div");
-    toast.className = `toast-message ${type}`;
-    toast.innerHTML = message;
+      try {
+          const response = await fetch(menuApiUrl, {
+              method: "GET",
+              headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              }
+          });
 
-    toastContainer.appendChild(toast);
+          const result = await response.json();
 
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
+          if (result.status === 200 && result.data.food_categories.length > 0) {
+              const menuContainer = document.getElementById("menu-container");
+              menuContainer.innerHTML = ""; // Clear previous content
 
-// Function to fetch and display the menu
-async function fetchMenu() {
-    if (!token) {
-        console.error("Access token not found!");
-        return;
-    }
+              result.data.food_categories.forEach(category => {
+                  // Create category heading
+                  const categorySection = document.createElement("div");
+                  categorySection.classList.add("mt-3");
 
-    try {
-        const response = await fetch(menuApiUrl, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
+                  const categoryTitle = document.createElement("h4");
+                  categoryTitle.classList.add("menu-heading");
+                  categoryTitle.textContent = category.name.trim();
 
-        const result = await response.json();
+                  categorySection.appendChild(categoryTitle);
 
-        if (result.status === 200 && result.data.food_categories.length > 0) {
-            const menuContainer = document.getElementById("menu-container");
-            menuContainer.innerHTML = ""; // Clear previous content
+                  // Check if category has products
+                  if (category.products.length > 0) {
+                      const productRow = document.createElement("div");
+                      productRow.classList.add("row", "menu-sec");
 
-            result.data.food_categories.forEach(category => {
-                // Create category heading
-                const categorySection = document.createElement("div");
-                categorySection.classList.add("mt-3");
+                      category.products.forEach(product => {
+                          const productCol = document.createElement("div");
+                          productCol.classList.add("col-lg-6", "col-md-6", "col-sm-12", "px-0");
 
-                const categoryTitle = document.createElement("h4");
-                categoryTitle.classList.add("menu-heading");
-                categoryTitle.textContent = category.name.trim();
+                          productCol.innerHTML = `
+                              <div class="food-item">
+                                  <div class="row">
+                                      <div class="col-4">
+                                          <img src="assets/img/breakfast.png" alt="Image">
+                                      </div>
+                                      <div class="col-5">
+                                          <h5>${product.name}</h5>
+                                          <p><span class="price">${product.price}</span></p>
+                                      </div>
+                                      <div class="col-3 text-end">
+                                          <button class="add-btn" data-product-id="${product.id}">Add+</button>
+                                          <img src="assets/img/wishlist.svg" alt="Image" id="whishlist-icon">
+                                      </div>
+                                  </div>
+                              </div>
+                          `;
 
-                categorySection.appendChild(categoryTitle);
+                          productRow.appendChild(productCol);
+                      });
 
-                // Check if category has products
-                if (category.products.length > 0) {
-                    const productRow = document.createElement("div");
-                    productRow.classList.add("row", "menu-sec");
+                      categorySection.appendChild(productRow);
+                  } else {
+                      const noProductMessage = document.createElement("p");
+                      noProductMessage.textContent = "No items available in this category.";
+                      noProductMessage.style.color = "#777";
+                      noProductMessage.style.fontStyle = "italic";
+                      categorySection.appendChild(noProductMessage);
+                  }
 
-                    category.products.forEach(product => {
-                        const productCol = document.createElement("div");
-                        productCol.classList.add("col-lg-6", "col-md-6", "col-sm-12", "px-0");
+                  menuContainer.appendChild(categorySection);
+              });
 
-                        productCol.innerHTML = `
-                            <div class="food-item">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="assets/img/breakfast.png" alt="Image" class="food-item-img">
-                                    </div>
-                                    <div class="col-5">
-                                        <h5>${product.name}</h5>
-                                        <p><span class="price">${product.price}</span></p>
-                                    </div>
-                                    <div class="col-3 text-end">
-                                        <button class="add-btn" data-product-id="${product.id}">Add+</button>
-                                        <img src="assets/img/wishlist.svg" alt="Wishlist" class="wishlist-icon" data-product-id="${product.id}">
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+              // Add event listeners to "Add+" buttons
+              document.querySelectorAll(".add-btn").forEach(button => {
+                  button.addEventListener("click", function () {
+                      const productId = this.getAttribute("data-product-id");
+                      addToCart(productId, 1); // Default quantity is 1
+                  });
+              });
+          } else {
+              document.getElementById("menu-container").innerHTML = "<p>No categories found.</p>";
+          }
+      } catch (error) {
+          console.error("Error fetching menu:", error);
+          document.getElementById("menu-container").innerHTML = "<p>Failed to load menu.</p>";
+      }
+  }
 
-                        productRow.appendChild(productCol);
-                    });
+  // Function to add item to cart
+  async function addToCart(productId, quantity) {
+      if (!token) {
+          console.error("Access token not found!");
+          return;
+      }
 
-                    categorySection.appendChild(productRow);
-                } else {
-                    const noProductMessage = document.createElement("p");
-                    noProductMessage.textContent = "No items available in this category.";
-                    noProductMessage.style.color = "#777";
-                    noProductMessage.style.fontStyle = "italic";
-                    categorySection.appendChild(noProductMessage);
-                }
+      try {
+          const response = await fetch(cartApiUrl, {
+              method: "POST",
+              headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  product_id: productId,
+                  quantity: quantity.toString() // Ensure quantity is sent as a string
+              })
+          });
 
-                menuContainer.appendChild(categorySection);
-            });
+          const result = await response.json();
 
-            // Add event listeners to "Add+" buttons
-            document.querySelectorAll(".add-btn").forEach(button => {
-                button.addEventListener("click", function () {
-                    const productId = this.getAttribute("data-product-id");
-                    addToCart(productId, 1);
-                });
-            });
+          if (response.ok) {
+              alert("Product added to cart successfully!");
+          } else {
+              alert(`Failed to add product to cart: ${result.message}`);
+          }
+      } catch (error) {
+          console.error("Error adding to cart:", error);
+          alert("An error occurred while adding the product to the cart.");
+      }
+  }
 
-            // Add event listeners to wishlist icons
-            document.querySelectorAll(".wishlist-icon").forEach(icon => {
-                icon.addEventListener("click", function () {
-                    const productId = this.getAttribute("data-product-id");
-                    toggleWishlist(this, productId);
-                });
-            });
-
-        } else {
-            document.getElementById("menu-container").innerHTML = "<p>No categories found.</p>";
-        }
-    } catch (error) {
-        console.error("Error fetching menu:", error);
-        document.getElementById("menu-container").innerHTML = "<p>Failed to load menu.</p>";
-    }
-}
-
-// Function to add item to cart
-async function addToCart(productId, quantity) {
-    if (!token) {
-        console.error("Access token not found!");
-        return;
-    }
-
-    try {
-        const response = await fetch(cartApiUrl, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                quantity: quantity.toString()
-            })
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            showToast("Product added to cart successfully!");
-        } else {
-            showToast(`Failed to add product to cart: ${result.message}`, "error");
-        }
-    } catch (error) {
-        console.error("Error adding to cart:", error);
-        showToast("An error occurred while adding the product to the cart.", "error");
-    }
-}
-
-// Function to toggle wishlist (add item to wishlist)
-async function toggleWishlist(icon, productId) {
-    if (!token) {
-        console.error("Access token not found!");
-        return;
-    }
-
-    try {
-        const response = await fetch(wishlistApiUrl, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                product_id: productId
-            })
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            // Change wishlist icon color (assuming active class makes it colorful)
-            icon.classList.toggle("wishlist-active");
-
-            showToast("Product added to wishlist successfully!");
-        } else {
-            showToast(`Failed to add product to wishlist: ${result.message}`, "error");
-        }
-    } catch (error) {
-        console.error("Error adding to wishlist:", error);
-        showToast("An error occurred while adding the product to the wishlist.", "error");
-    }
-}
-
-// Load the menu when the page loads
-document.addEventListener("DOMContentLoaded", fetchMenu);
-
+  // Load the menu when the page loads
+  document.addEventListener("DOMContentLoaded", fetchMenu);
 </script>
 
 

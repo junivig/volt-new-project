@@ -166,7 +166,7 @@
             </div>
         </section>
       <!-- /Cart Section -->
-      <div id="toast-container" class="toast-container"></div>  
+
 
   </main>
 
@@ -241,8 +241,8 @@
 
     // Function to update Subtotal and Order Total
     function updateCartTotal(totalPrice) {
-        document.getElementById("subtotal-amount").innerText = `${totalPrice.toFixed(2)}SR`;
-        document.getElementById("order-total-amount").innerText = `${totalPrice.toFixed(2)}SR`;
+        document.getElementById("subtotal-amount").innerText = `$${totalPrice.toFixed(2)}`;
+        document.getElementById("order-total-amount").innerText = `$${totalPrice.toFixed(2)}`;
     }
 
     // Event delegation for quantity updates and removal

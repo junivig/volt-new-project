@@ -26,9 +26,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <script src="assets/js/constant.js"></script>
-  <!-- Add Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <!-- =======================================================
   * Template Name: eNno
@@ -370,9 +367,29 @@
         return toastContainer;
       }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+  const profileImageElement = document.getElementById("profileImagePreview");
 
+  // Get the profile image URL from localStorage
+  const profileImage = localStorage.getItem("profileImage");
 
- 
+  if (profileImage) {
+      profileImageElement.src = profileImage; // Set the image source to the one stored in localStorage
+  } else {
+      // Optionally set a default image if not found in localStorage
+      profileImageElement.src = "assets/img/profile-img.png";
+  }
+});
+// Redirection check on profile image click
+document.addEventListener("DOMContentLoaded", function () {
+  const profileLink = document.getElementById("profileLink");
+
+  // Check if the user is logged in by looking for a token in localStorage
+  const token = localStorage.getItem("accessToken");
+
+  // Set the href based on the token's presence
+  profileLink.href = token ? "profile.html" : "login.html";
+});
   </script>
 
  <!-- /Subscribe Footer Section --> 

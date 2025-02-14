@@ -2277,7 +2277,7 @@ h5.signature-price {
 
   margin-bottom: 20px;
 }
-.food-item-img {
+.food-item img {
   width: 100%;
   border-radius: 10px;
   height: 150px;
@@ -2812,16 +2812,19 @@ a {
     height: auto;
     border-radius: 50%;
 }
-
+#whishlist-icon
+{
+  width: 50%;
+    height: 35%;
+    margin-top: 12%;
+}
 .toast-message.error {
   background-color: #ff4c4c;
 }
 
 .wishlist-icon {
   cursor: pointer;
-    width: 50%;
-    height: 50%;
-    margin-top: 10%;
+  width: 24px;
 }
 
 .wishlist-active {

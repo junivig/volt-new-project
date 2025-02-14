@@ -26,9 +26,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <script src="assets/js/constant.js"></script>
-  <!-- Add Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <!-- =======================================================
   * Template Name: eNno
@@ -117,14 +114,14 @@
   <main class="main">
 
 
-        <!-- Wishlist Section -->
+        <!-- Cart Section -->
         <section id="testimonials" class="testimonials section light-background bg-image">
           <div class="container mt-5">
             <h3>Wishlist</h3>
-            <table class="table wishlist-table mt-4">
+            <table class="table wishlist-table  mt-4">
                 <thead class="border-bottom">
                     <tr>
-                        <th><input type="checkbox" id="select-all"></th>
+                        <th><input type="checkbox"></th>
                         <th></th>
                         <th></th>
                         <th>Product Name</th>
@@ -134,8 +131,37 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="wishlist-table-body">
-                    <!-- Wishlist items will be dynamically added here -->
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><button class="btn-remove">&times;</button></td>
+                        <td><img src="assets/img/breakfast.png" alt="Image"></td>
+                        <td> Apple Juice</td>
+                        <td>$11.05</td>
+                        <td>27 Jan, 2025</td>
+                        <td>Stock</td>
+                        <td><button class="btn btn-cart">Add to cart</button></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <td><button class="btn-remove">&times;</button></td>
+                      <td><img src="assets/img/breakfast.png" alt="Image"></td>
+                      <td> Apple Juice</td>
+                      <td>$11.05</td>
+                      <td>27 Jan, 2025</td>
+                      <td>Stock</td>
+                      <td><button class="btn btn-cart">Add to cart</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox"></td>
+                    <td><button class="btn-remove">&times;</button></td>
+                    <td><img src="assets/img/breakfast.png" alt="Image"></td>
+                    <td> Apple Juice</td>
+                    <td>$11.05</td>
+                    <td>27 Jan, 2025</td>
+                    <td>Stock</td>
+                    <td><button class="btn btn-cart">Add to cart</button></td>
+                </tr>
                 </tbody>
             </table>
         
@@ -145,197 +171,17 @@
                 </select>
                 <div>
                     <button class="btn btn-cart">Apply Actions</button>
-                    <button class="btn btn-cart" id="add-selected-to-cart">Add selection to Cart</button>
-                    <button class="btn btn-cart" id="add-all-to-cart">Add all to Cart</button>
+                    <button class="btn btn-cart">Add selection to Cart</button>
+                    <button class="btn btn-cart">Add all to Cart</button>
                 </div>
             </div>
+            
         </div>
-        
         </section>
-      <!-- /Wishlist Section -->
-<!-- Toast Container -->
-<div id="toast-container" class="toast-container"></div>  
+      <!-- /Cart Section -->
+
 
   </main>
-
-  <script>
-    const wishlistApiUrl = `${apiBaseUrl}wishlist`;
-    const removeWishlistApiUrl = `${apiBaseUrl}wishlist/remove`;
-    const cartApiUrl = `${apiBaseUrl}cart/add`;
-    const token = localStorage.getItem("accessToken");
-    
-    // Function to show toast notifications
-    function showToast(message, type = "success") {
-        const toastContainer = document.getElementById("toast-container");
-        if (!toastContainer) {
-            console.error("Toast container not found!");
-            return;
-        }
-    
-        const toast = document.createElement("div");
-        toast.className = `toast-message ${type}`;
-        toast.innerHTML = message;
-    
-        toastContainer.appendChild(toast);
-    
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
-    }
-    
-    // Function to fetch and display wishlist items
-    async function fetchWishlist() {
-        if (!token) {
-            console.error("Access token not found!");
-            return;
-        }
-    
-        try {
-            const response = await fetch(wishlistApiUrl, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok && result.status === 200 && result.data.wishlist.length > 0) {
-                const wishlistTableBody = document.querySelector(".wishlist-table tbody");
-                wishlistTableBody.innerHTML = "";
-    
-                result.data.wishlist.forEach(item => {
-                    const product = item.product;
-    
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td><input type="checkbox" class="wishlist-checkbox" data-id="${product.id}"></td>
-                        <td><span class="remove-btn" data-product-id="${product.id}">&times;</span></td>
-                        <td><img src="assets/img/breakfast.png" alt="Image"></td>
-                        <td>${product.name}</td>
-                        <td>${product.price}</td>
-                        <td>${item.createdAt.split("T")[0]}</td>
-                        <td>${product.stock ? product.stock : "Out of Stock"}</td>
-                        <td><button class="btn btn-cart add-to-cart" data-product-id="${product.id}">Add to Cart</button></td>
-                    `;
-    
-                    wishlistTableBody.appendChild(row);
-                });
-    
-                // Attach event listeners after content is loaded
-                attachWishlistEventListeners();
-            } else {
-                document.querySelector(".wishlist-table tbody").innerHTML =
-                    "<tr><td colspan='8'>Your wishlist is empty.</td></tr>";
-            }
-        } catch (error) {
-            console.error("Error fetching wishlist:", error);
-            document.querySelector(".wishlist-table tbody").innerHTML =
-                "<tr><td colspan='8'>Failed to load wishlist.</td></tr>";
-        }
-    }
-    
-    // Function to attach event listeners for remove and add-to-cart buttons
-    function attachWishlistEventListeners() {
-        document.querySelectorAll(".remove-btn").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const productId = this.getAttribute("data-product-id");
-                removeWishlistItem(productId);
-            });
-        });
-    
-        document.querySelectorAll(".add-to-cart").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const productId = this.getAttribute("data-product-id");
-                addToCart(productId, 1);
-            });
-        });
-    }
-    
-    // Function to remove an item from the wishlist
-    async function removeWishlistItem(productId) {
-        if (!token) {
-            console.error("Access token not found!");
-            return;
-        }
-    
-        if (!productId) {
-            console.error("Product ID is missing!");
-            showToast("Product ID is missing.", "error");
-            return;
-        }
-    
-        try {
-            const response = await fetch(removeWishlistApiUrl, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ product_id: productId })
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok && result.status === 200) {
-                showToast("Item removed from wishlist!");
-                fetchWishlist(); // Refresh wishlist
-            } else {
-                showToast(`Failed to remove item: ${result.message || "Unknown error"}`, "error");
-            }
-        } catch (error) {
-            console.error("Error removing wishlist item:", error);
-            showToast("An error occurred while removing the item.", "error");
-        }
-    }
-    
-    // Function to add an item from wishlist to cart
-    async function addToCart(productId, quantity) {
-        if (!token) {
-            console.error("Access token not found!");
-            return;
-        }
-    
-        if (!productId) {
-            console.error("Product ID is missing!");
-            showToast("Product ID is missing.", "error");
-            return;
-        }
-    
-        try {
-            const response = await fetch(cartApiUrl, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    product_id: productId,
-                    quantity: quantity.toString() // Ensure quantity is sent
-                })
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok && result.status === 200) {
-                showToast("Item added to cart successfully!");
-                removeWishlistItem(productId); // Remove from wishlist after adding to cart
-            } else {
-                showToast(`Failed to add to cart: ${result.message || "Unknown error"}`, "error");
-            }
-        } catch (error) {
-            console.error("Error adding item to cart:", error);
-            showToast("An error occurred while adding the item to the cart.", "error");
-        }
-    }
-    
-    // Load the wishlist when the page loads
-    document.addEventListener("DOMContentLoaded", fetchWishlist);
-    </script>
-    
-
-
 
 
  <!-- /Subscribe Footer Section --> 

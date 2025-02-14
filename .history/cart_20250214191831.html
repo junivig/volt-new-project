@@ -150,11 +150,11 @@
                             <table class="table">
                                 <tr>
                                     <td>Subtotal</td>
-                                    <td id="subtotal-amount">0.00 SR</td>
+                                    <td id="subtotal-amount">$0.00</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Order Total</strong></td>
-                                    <td><strong id="order-total-amount">0.00 SR</strong></td>
+                                    <td><strong id="order-total-amount">$0.00</strong></td>
                                 </tr>
                             </table>
                             <a href="checkout.html">
@@ -166,7 +166,7 @@
             </div>
         </section>
       <!-- /Cart Section -->
-      <div id="toast-container" class="toast-container"></div>  
+
 
   </main>
 
@@ -241,8 +241,8 @@
 
     // Function to update Subtotal and Order Total
     function updateCartTotal(totalPrice) {
-        document.getElementById("subtotal-amount").innerText = `${totalPrice.toFixed(2)}SR`;
-        document.getElementById("order-total-amount").innerText = `${totalPrice.toFixed(2)}SR`;
+        document.getElementById("subtotal-amount").innerText = `$${totalPrice.toFixed(2)}`;
+        document.getElementById("order-total-amount").innerText = `$${totalPrice.toFixed(2)}`;
     }
 
     // Event delegation for quantity updates and removal

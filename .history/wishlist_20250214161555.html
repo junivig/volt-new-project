@@ -117,7 +117,7 @@
   <main class="main">
 
 
-        <!-- Wishlist Section -->
+        <!-- Cart Section -->
         <section id="testimonials" class="testimonials section light-background bg-image">
           <div class="container mt-5">
             <h3>Wishlist</h3>
@@ -152,190 +152,135 @@
         </div>
         
         </section>
-      <!-- /Wishlist Section -->
-<!-- Toast Container -->
-<div id="toast-container" class="toast-container"></div>  
+      <!-- /Cart Section -->
+
 
   </main>
 
   <script>
-    const wishlistApiUrl = `${apiBaseUrl}wishlist`;
-    const removeWishlistApiUrl = `${apiBaseUrl}wishlist/remove`;
-    const cartApiUrl = `${apiBaseUrl}cart/add`;
-    const token = localStorage.getItem("accessToken");
+    document.addEventListener("DOMContentLoaded", function () {
+        const wishlistApiUrl = `${apiBaseUrl}wishlist`;
+        const token = localStorage.getItem("access_token"); // Retrieve token from localStorage
     
-    // Function to show toast notifications
-    function showToast(message, type = "success") {
-        const toastContainer = document.getElementById("toast-container");
-        if (!toastContainer) {
-            console.error("Toast container not found!");
-            return;
-        }
-    
-        const toast = document.createElement("div");
-        toast.className = `toast-message ${type}`;
-        toast.innerHTML = message;
-    
-        toastContainer.appendChild(toast);
-    
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
-    }
-    
-    // Function to fetch and display wishlist items
-    async function fetchWishlist() {
         if (!token) {
-            console.error("Access token not found!");
+            console.error("Access token not found! Redirecting to login...");
+            alert("Session expired. Please log in again.");
+            window.location.href = "login.html"; // Redirect to login page
             return;
         }
     
-        try {
-            const response = await fetch(wishlistApiUrl, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok && result.status === 200 && result.data.wishlist.length > 0) {
-                const wishlistTableBody = document.querySelector(".wishlist-table tbody");
-                wishlistTableBody.innerHTML = "";
-    
-                result.data.wishlist.forEach(item => {
-                    const product = item.product;
-    
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td><input type="checkbox" class="wishlist-checkbox" data-id="${product.id}"></td>
-                        <td><span class="remove-btn" data-product-id="${product.id}">&times;</span></td>
-                        <td><img src="assets/img/breakfast.png" alt="Image"></td>
-                        <td>${product.name}</td>
-                        <td>${product.price}</td>
-                        <td>${item.createdAt.split("T")[0]}</td>
-                        <td>${product.stock ? product.stock : "Out of Stock"}</td>
-                        <td><button class="btn btn-cart add-to-cart" data-product-id="${product.id}">Add to Cart</button></td>
-                    `;
-    
-                    wishlistTableBody.appendChild(row);
+        // Function to fetch wishlist
+        async function fetchWishlist() {
+            try {
+                const response = await fetch(wishlistApiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
                 });
     
-                // Attach event listeners after content is loaded
-                attachWishlistEventListeners();
-            } else {
-                document.querySelector(".wishlist-table tbody").innerHTML =
-                    "<tr><td colspan='8'>Your wishlist is empty.</td></tr>";
+                const result = await response.json();
+                console.log("Wishlist API Response:", result);
+    
+                if (result.status === 200 && result.data.wishlist.length > 0) {
+                    renderWishlist(result.data.wishlist);
+                } else {
+                    document.getElementById("wishlist-table-body").innerHTML =
+                        "<tr><td colspan='8'>Your wishlist is empty.</td></tr>";
+                }
+            } catch (error) {
+                console.error("Error fetching wishlist:", error);
+                document.getElementById("wishlist-table-body").innerHTML =
+                    "<tr><td colspan='8'>Failed to load wishlist.</td></tr>";
             }
-        } catch (error) {
-            console.error("Error fetching wishlist:", error);
-            document.querySelector(".wishlist-table tbody").innerHTML =
-                "<tr><td colspan='8'>Failed to load wishlist.</td></tr>";
-        }
-    }
-    
-    // Function to attach event listeners for remove and add-to-cart buttons
-    function attachWishlistEventListeners() {
-        document.querySelectorAll(".remove-btn").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const productId = this.getAttribute("data-product-id");
-                removeWishlistItem(productId);
-            });
-        });
-    
-        document.querySelectorAll(".add-to-cart").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const productId = this.getAttribute("data-product-id");
-                addToCart(productId, 1);
-            });
-        });
-    }
-    
-    // Function to remove an item from the wishlist
-    async function removeWishlistItem(productId) {
-        if (!token) {
-            console.error("Access token not found!");
-            return;
         }
     
-        if (!productId) {
-            console.error("Product ID is missing!");
-            showToast("Product ID is missing.", "error");
-            return;
-        }
+        // Function to render wishlist items
+        function renderWishlist(wishlist) {
+            const wishlistTableBody = document.getElementById("wishlist-table-body");
+            wishlistTableBody.innerHTML = ""; // Clear previous content
     
-        try {
-            const response = await fetch(removeWishlistApiUrl, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ product_id: productId })
+            wishlist.forEach(item => {
+                const product = item.product;
+                const row = document.createElement("tr");
+    
+                row.innerHTML = `
+                    <td><input type="checkbox" class="wishlist-checkbox" data-id="${item.id}"></td>
+                    <td><button class="btn-remove" data-id="${item.id}">&times;</button></td>
+                    <td><img src="${product.productImage || 'assets/img/breakfast.png'}" alt="Image" width="50"></td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${item.createdAt.split("T")[0]}</td> 
+                    <td>${product.stock ? product.stock : "Out of Stock"}</td>
+                    <td><button class="btn btn-cart add-to-cart" data-id="${product.id}">Add to cart</button></td>
+                `;
+    
+                wishlistTableBody.appendChild(row);
             });
     
-            const result = await response.json();
+            addEventListeners();
+        }
     
-            if (response.ok && result.status === 200) {
-                showToast("Item removed from wishlist!");
-                fetchWishlist(); // Refresh wishlist
-            } else {
-                showToast(`Failed to remove item: ${result.message || "Unknown error"}`, "error");
+        // Function to add event listeners to dynamically created elements
+        function addEventListeners() {
+            // Remove Wishlist Item
+            document.querySelectorAll(".btn-remove").forEach(button => {
+                button.addEventListener("click", async function () {
+                    const itemId = this.getAttribute("data-id");
+                    await removeWishlistItem(itemId);
+                });
+            });
+    
+            // Add to Cart
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.addEventListener("click", function () {
+                    const productId = this.getAttribute("data-id");
+                    addToCart(productId);
+                });
+            });
+    
+            // Select All Checkbox
+            document.getElementById("select-all").addEventListener("change", function () {
+                document.querySelectorAll(".wishlist-checkbox").forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+        }
+    
+        // Function to remove an item from the wishlist
+        async function removeWishlistItem(itemId) {
+            try {
+                const response = await fetch(`${wishlistApiUrl}/${itemId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+    
+                const result = await response.json();
+                if (result.status === 200) {
+                    console.log("Item removed successfully:", itemId);
+                    fetchWishlist(); // Refresh the list
+                } else {
+                    console.error("Failed to remove item:", result.message);
+                }
+            } catch (error) {
+                console.error("Error removing wishlist item:", error);
             }
-        } catch (error) {
-            console.error("Error removing wishlist item:", error);
-            showToast("An error occurred while removing the item.", "error");
-        }
-    }
-    
-    // Function to add an item from wishlist to cart
-    async function addToCart(productId, quantity) {
-        if (!token) {
-            console.error("Access token not found!");
-            return;
         }
     
-        if (!productId) {
-            console.error("Product ID is missing!");
-            showToast("Product ID is missing.", "error");
-            return;
+        // Function to add a product to the cart
+        function addToCart(productId) {
+            console.log(`Product ${productId} added to cart.`);
+            alert(`Product ${productId} added to cart!`); // Replace with actual cart logic
         }
     
-        try {
-            const response = await fetch(cartApiUrl, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    product_id: productId,
-                    quantity: quantity.toString() // Ensure quantity is sent
-                })
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok && result.status === 200) {
-                showToast("Item added to cart successfully!");
-                removeWishlistItem(productId); // Remove from wishlist after adding to cart
-            } else {
-                showToast(`Failed to add to cart: ${result.message || "Unknown error"}`, "error");
-            }
-        } catch (error) {
-            console.error("Error adding item to cart:", error);
-            showToast("An error occurred while adding the item to the cart.", "error");
-        }
-    }
-    
-    // Load the wishlist when the page loads
-    document.addEventListener("DOMContentLoaded", fetchWishlist);
+        // Fetch Wishlist on Page Load
+        fetchWishlist();
+    });
     </script>
-    
-
-
 
 
  <!-- /Subscribe Footer Section --> 

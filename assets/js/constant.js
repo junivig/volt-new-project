@@ -1,2 +1,2 @@
 // assets/js/constant.js
-const apiBaseUrl = 'http://192.168.131.152:8080/api/';
+const apiBaseUrl = 'https://api.voltfood.co/api/';

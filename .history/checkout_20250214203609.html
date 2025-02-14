@@ -219,8 +219,7 @@
         </div>
         </section>
       <!-- /Checkout Section -->
- <!-- Toast Container -->
- <div id="toast-container" class="toast-container"></div> 
+
 
   </main>
 
@@ -362,17 +361,17 @@
     submitButton?.addEventListener("click", function (event) {
       event.preventDefault(); // Prevent default form submission
 
-      // Get form values safely
+      // Get form elements safely
       const firstName = document.getElementById("first-name")?.value.trim() || "";
       const lastName = document.getElementById("last-name")?.value.trim() || "";
       const email = document.getElementById("email")?.value.trim() || "";
-      const phone = document.getElementById("phone")?.value.trim() || ""; // No longer required
+      const phone = document.getElementById("phone")?.value.trim() || "";
       const country = document.getElementById("country")?.value || "";
       const city = document.getElementById("city")?.value || "";
-      const company = document.getElementById("company")?.value.trim() || ""; // No longer required
-      const address = document.getElementById("street-address")?.value.trim() || ""; // No longer required
-      const state = document.getElementById("state")?.value.trim() || ""; // No longer required
-      const zipCode = document.getElementById("zip-code")?.value.trim() || ""; // No longer required
+      const company = document.getElementById("company")?.value.trim() || "";
+      const address = document.getElementById("street-address")?.value.trim() || "";
+      const state = document.getElementById("state")?.value.trim() || "";
+      const zipCode = document.getElementById("zip-code")?.value.trim() || "";
       const orderNotes = document.getElementById("order-notes")?.value.trim() || "";
 
       // Validation flags
@@ -395,6 +394,13 @@
         isValid = false;
       }
 
+      // Validate phone number (must be 10-15 digits)
+      const phonePattern = /^\d{10,15}$/;
+      if (!phonePattern.test(phone)) {
+        showToast("Please enter a valid phone number (10-15 digits).", "error");
+        isValid = false;
+      }
+
       if (!country) {
         showToast("Please select your country.", "error");
         isValid = false;
@@ -402,6 +408,21 @@
 
       if (!city) {
         showToast("Please enter your city.", "error");
+        isValid = false;
+      }
+
+      if (!address) {
+        showToast("Street address is required.", "error");
+        isValid = false;
+      }
+
+      if (!state) {
+        showToast("State is required.", "error");
+        isValid = false;
+      }
+
+      if (!zipCode) {
+        showToast("ZIP code is required.", "error");
         isValid = false;
       }
 
@@ -416,13 +437,13 @@
         first_name: firstName,
         last_name: lastName,
         email: email,
-        phone: phone, // Now optional
+        phone: phone,
         country: country,
         city: city,
-        company: company, // Now optional
-        address: address, // Now optional
-        state: state, // Now optional
-        zip_code: zipCode, // Now optional
+        company: company,
+        address: address,
+        state: state,
+        zip_code: zipCode,
         order_notes: orderNotes
       };
 
@@ -442,7 +463,7 @@
 
           // Redirect after success
           setTimeout(() => {
-            window.location.href = "index.html";
+            window.location.href = "thank-you.html";
           }, 2000);
         })
         .catch((error) => {

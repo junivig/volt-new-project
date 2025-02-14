@@ -2819,9 +2819,7 @@ a {
 
 .wishlist-icon {
   cursor: pointer;
-    width: 50%;
-    height: 50%;
-    margin-top: 10%;
+  width: 24px;
 }
 
 .wishlist-active {
