@@ -307,92 +307,152 @@
   </section><!-- /News Section -->
 
 
-  <script>
-    const apiUrl = `${apiBaseUrl}packages`;
-    const token = localStorage.getItem("accessToken");
-    const packagesContainer = document.getElementById("packages-container")?.querySelector(".row");
-  
-    if (!packagesContainer) {
-        console.error("Error: packages-container or row class not found in the DOM.");
-    }
-  
-    // Fetch package data from API with Authorization header
-    async function fetchPackages() {
-        try {
-            const response = await axios.get(apiUrl, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-  
-            if (response.data.status === 200) {
-                renderPackages(response.data.data.packages);
-            } else {
-                console.error("Failed to fetch packages data:", response.data.message);
-                packagesContainer.innerHTML = "<p>Unable to load packages at the moment.</p>";
-            }
-        } catch (error) {
-            console.error("Error fetching packages data:", error.response?.data || error.message);
-            packagesContainer.innerHTML = "<p>An error occurred while loading packages.</p>";
-        }
-    }
-  
-    // Render packages dynamically
-    function renderPackages(packageItems) {
-        packagesContainer.innerHTML = ""; // Clear existing content
-  
-        packageItems.forEach(item => {
-            const packageHtml = `
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                  <img src="assets/img/news-one.png" class="img-fluid " alt="">
-                    <h4 class="mt-3 meal-heading">${item.title}</h4>
-                    <h6 class="packages-para-text">${item.description.substring(0, 150)}...</h6>
-                    <a href="meal-packages-detail.html?id=${item.id}">
-                          <button class="btn btn-meal-details mt-2">View Details</button>
-                    </a>
-                </div>
-            `;
-            packagesContainer.innerHTML += packageHtml;
-        });
-    }
-  
-    // Load more button functionality
-    document.getElementById("load-more")?.addEventListener("click", fetchPackages);
-  
-    // Initial fetch
-    fetchPackages();
-  </script>
-  
+<script>
+  const apiUrl = `${apiBaseUrl}packages`;
+  const packagesContainer = document.getElementById("packages-container")?.querySelector(".row");
 
-<!-- API News & Testimonial Implementation -->
+  if (!packagesContainer) {
+      console.error("Error: packages-container or row class not found in the DOM.");
+  }
+
+  // Fetch package data from API
+  async function fetchPackages() {
+      try {
+          const response = await axios.get(apiUrl);
+
+          if (response.data.status === 200) {
+              renderPackages(response.data.data.packages);
+          } else {
+              console.error("Failed to fetch packages data:", response.data.message);
+              packagesContainer.innerHTML = "<p>Unable to load packages at the moment.</p>";
+          }
+      } catch (error) {
+          console.error("Error fetching packages data:", error.response?.data || error.message);
+          packagesContainer.innerHTML = "<p>An error occurred while loading packages.</p>";
+      }
+  }
+
+  // Render packages dynamically
+  function renderPackages(packageItems) {
+      packagesContainer.innerHTML = ""; // Clear existing content
+
+      packageItems.forEach(item => {
+          const packageHtml = `
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                  <img src="${imgBaseUrl}${item.image}" alt="Meal Package Image" class="meal-image">
+                  <h4 class="mt-3 meal-heading">${item.title}</h4>
+                  <h6 class="packages-para-text">${item.description.substring(0, 150)}...</h6>
+                  <a href="meal-packages-detail.html?id=${item.id}">
+                      <button class="btn btn-meal-details mt-2">View Details</button>
+                  </a>
+              </div>
+          `;
+          packagesContainer.innerHTML += packageHtml;
+      });
+  }
+
+  // Load more button functionality
+  document.getElementById("load-more")?.addEventListener("click", fetchPackages);
+
+  // Initial fetch
+  fetchPackages();
+</script>
+
+<!-- API News Implementation -->
+<script>
+  const apiUrl = `${apiBaseUrl}news`;
+  const token = localStorage.getItem("accessToken"); // Token retrieved from local storage
+
+  const newsContainer = document.getElementById("news-container")?.querySelector(".row");
+
+  if (!newsContainer) {
+      console.error("Error: news-container or row class not found in the DOM.");
+  }
+
+  // Fetch news data from API
+  async function fetchNews() {
+    try {
+        const token = localStorage.getItem("accessToken"); // Get token from local storage
+
+        if (!token) {
+            console.error("Error: No access token found!");
+            newsContainer.innerHTML = "<p class='text-center text-danger'>Authorization required to view news.</p>";
+            return;
+        }
+
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}` // Include the token in the request
+            }
+        });
+
+        if (response.data.status === 200) {
+            renderNews(response.data.data.news);
+        } else {
+            console.error("Failed to fetch news data:", response.data.message);
+            newsContainer.innerHTML = "<p>Unable to load news at the moment.</p>";
+        }
+    } catch (error) {
+        console.error("Error fetching news data:", error.response?.data || error.message);
+        newsContainer.innerHTML = "<p>An error occurred while loading news.</p>";
+    }
+}
+
+  // Render news dynamically
+  function renderNews(newsItems) {
+      newsContainer.innerHTML = ""; // Clear existing content
+
+      newsItems.forEach(item => {
+          const newsHtml = `
+      <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
+   <div class="news-item position-relative">
+    <div class="">
+                <img src="assets/img/news-one.png" class="img-fluid " alt="">
+              </div>
+              <div class="mt-3 px-3">
+                <img src="assets/img/calendar-icon.png" alt="Location Icon" class="icon-right">
+                <span class="news-date-text">March 17, 2022</span>
+              </div>
+  <h3  class="px-3 mt-2">${item.name}</h3>
+  
+  <p  class="px-3 mt-2"">
+      ${item.description.substring(0, 150)}...
+  </p>
+</div>
+</div>
+  `;
+          newsContainer.innerHTML += newsHtml;
+      });
+  }
+
+
+
+  // Initial fetch
+  fetchNews();
+</script>
+<!-- API Testimonial Implementation -->
 <script>
   document.addEventListener("DOMContentLoaded", async function () {
+      const apiUrl = `${apiBaseUrl}testimonials`;
       const token = localStorage.getItem("accessToken");
-
-      // API URLs
-      const newsApiUrl = `${apiBaseUrl}news`;
-      const testimonialsApiUrl = `${apiBaseUrl}testimonials`;
-
-      // DOM Elements
-      const newsContainer = document.getElementById("news-container")?.querySelector(".row");
       const testimonialWrapper = document.getElementById("testimonial-wrapper");
 
-      // Ensure containers exist
-      if (!newsContainer) console.error("Error: news-container not found.");
-      if (!testimonialWrapper) console.error("Error: testimonial-wrapper not found.");
+      if (!testimonialWrapper) {
+          console.error("Error: testimonial-wrapper not found.");
+          return;
+      }
 
-      // Fetch Data Function
-      async function fetchData(url, container, renderFunction) {
+      async function fetchTestimonials() {
           try {
               if (!token) {
                   console.error("Error: No access token found!");
-                  container.innerHTML = "<p class='text-center text-danger'>Authorization required.</p>";
+                  testimonialWrapper.innerHTML = "<p class='text-center text-danger'>Authorization required to view testimonials.</p>";
                   return;
               }
 
-              const response = await fetch(url, {
+              const response = await fetch(apiUrl, {
                   method: "GET",
                   headers: {
                       "Content-Type": "application/json",
@@ -403,42 +463,21 @@
 
               const data = await response.json();
               if (data.status === 200) {
-                  renderFunction(data.data);
+                  renderTestimonials(data.data.testimonials);
               } else {
-                  console.error("Failed to fetch data:", data.message);
-                  container.innerHTML = "<p>Unable to load content at the moment.</p>";
+                  console.error("Failed to fetch testimonials:", data.message);
+                  testimonialWrapper.innerHTML = "<p>Unable to load testimonials at the moment.</p>";
               }
           } catch (error) {
-              console.error("Error fetching data:", error);
-              container.innerHTML = "<p>An error occurred while loading content.</p>";
+              console.error("Error fetching testimonials:", error);
+              testimonialWrapper.innerHTML = "<p>An error occurred while loading testimonials.</p>";
           }
       }
 
-      // Render News Function
-      function renderNews(newsData) {
-          newsContainer.innerHTML = "";
-          newsData.news.forEach(item => {
-              const newsHtml = `
-                  <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                      <div class="news-item position-relative">
-                          <div><img src="assets/img/news-one.png" class="img-fluid" alt=""></div>
-                          <div class="mt-3 px-3">
-                              <img src="assets/img/calendar-icon.png" alt="Calendar Icon" class="icon-right">
-                              <span class="news-date-text">March 17, 2022</span>
-                          </div>
-                          <h3 class="px-3 mt-2">${item.name}</h3>
-                          <p class="px-3 mt-2">${item.description.substring(0, 150)}...</p>
-                      </div>
-                  </div>
-              `;
-              newsContainer.insertAdjacentHTML("beforeend", newsHtml);
-          });
-      }
-
-      // Render Testimonials Function
-      function renderTestimonials(testimonialsData) {
+      function renderTestimonials(testimonials) {
           testimonialWrapper.innerHTML = "";
-          testimonialsData.testimonials.forEach(testimonial => {
+
+          testimonials.forEach(testimonial => {
               const testimonialHtml = `
                   <div class="swiper-slide">
                       <div class="testimonial-item">
@@ -456,7 +495,7 @@
                       </div>
                   </div>
               `;
-              testimonialWrapper.insertAdjacentHTML("beforeend", testimonialHtml);
+              testimonialWrapper.innerHTML += testimonialHtml;
           });
 
           // Reinitialize Swiper
@@ -464,7 +503,7 @@
               loop: true,
               speed: 600,
               autoplay: { delay: 5000 },
-              slidesPerView: 3,
+              slidesPerView: 3,  // Ensure 3 slides in a row
               spaceBetween: 40,
               pagination: {
                   el: ".swiper-pagination",
@@ -479,9 +518,7 @@
           });
       }
 
-      // Fetch News & Testimonials
-      if (newsContainer) fetchData(newsApiUrl, newsContainer, renderNews);
-      if (testimonialWrapper) fetchData(testimonialsApiUrl, testimonialWrapper, renderTestimonials);
+      fetchTestimonials();
   });
 </script>
 

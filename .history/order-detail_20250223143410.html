@@ -130,7 +130,6 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="cart-table-body">
@@ -213,13 +212,10 @@
                         <td>${product.price} SR</td>
                         <td>
                             <div class="quantity-control">
-                                <button class="decrease" data-id="${cartItem.id}" data-product-id="${product.id}">-</button>
                                 <input type="text" class="quantity-input" value="${cartItem.quantity}" data-id="${cartItem.id}" readonly>
-                                <button class="increase" data-id="${cartItem.id}" data-product-id="${product.id}">+</button>
                             </div>
                         </td>
                         <td class="item-total">${itemTotal.toFixed(2)} SR</td>
-                        <td><span class="remove-btn" data-id="${cartItem.id}">&times;</span></td>
                     `;
 
                     cartTableBody.appendChild(row);

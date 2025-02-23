@@ -335,7 +335,8 @@
         });
 
         const menuData = await menuResponse.json();
-        console.log("🍽️ Full Menu Days Data:", menuData.data);
+        console.log("🍽️ Menu Days Response:", menuData); // Debugging log
+        console.log("🍽️ Menu Days Response:", menuData);
 
         if (menuResponse.ok && menuData.data) {
             const menuDays = menuData.data.menu_days || menuData.data; // Handle different response structures

@@ -98,13 +98,6 @@
             padding: 5px 40px;
             border-radius: 40px;
         }
-        .btn-add-new {
-            background-color: #BCD531 !important;
-            color: white !important;
-            font-size: small;
-            padding: 10px 40px;
-            border-radius: 40px;
-        }
         .btn-light-gray {
             background-color: #F2F2F2 !important;
             color: #BCD531 !important;
@@ -227,7 +220,7 @@
         <h1 class="my-account-heading">MY ACCOUNT</h1>
     </div>
     <div class="row justify-content-center mb-5">
-    <div class="col-md-7">
+    <div class="col-md-8">
         <div class="tabs-container">
             <div class="tab-button" onclick="showSection('orders')">
                 <img src="assets/img/ic-orders.png" alt="Order Icon" class="icon-size"/>
@@ -265,141 +258,25 @@
                                 <td>September 24, 2020</td>
                                 <td>on hold</td>
                                 <td><strong>114.40$</strong> for 4 items</td>
-                                <td><a href="order-detail.html"><button class="btn btn-view">View</button></a></td>
+                                <td><button class="btn btn-view">View</button></td>
                             </tr>
                             <tr>
                                 <td><a href="#" class="order-id">#964</a></td>
                                 <td>September 24, 2020</td>
                                 <td>on hold</td>
                                 <td><strong>12.50$</strong> for 1 item</td>
-                                <td><a href="order-detail.html"><button class="btn btn-view">View</button></a></td>
+                                <td><button class="btn btn-view">View</button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div id="address" class="content-section text-center">
-                 <form id="address-form">
-                <div class="row mb-4 mb-2">
-                    <label class="col-12 mb-2 label-text">Address Type</label>
-                    <div class="col-md-6 mt-2">
-                        <div class="card-address">
-                            <label class="d-flex justify-content-between align-items-center" style="cursor: pointer;">
-                                <!-- Left side: Icon and text -->
-                                <div class="d-flex align-items-center">
-                                    <img src="assets/img/home-icon-address.png" alt="Home Icon" class="mr-2" />
-                                    <span>Home</span>
-                                </div>
-                                <!-- Right side: Radio button -->
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="address-type" 
-                                        value="home"
-                                        style="accent-color: #b6d63c"
-                                    />
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-            
-                    <div class="col-md-6 mt-2">
-                        <div class="card-address">
-                            <label class="d-flex justify-content-between align-items-center" style="cursor: pointer;">
-                                <!-- Left side: Icon and text -->
-                                <div class="d-flex align-items-center">
-                                    <img src="assets/img/office-icon.png" alt="Office Icon" class="mr-2" />
-                                    <span>Office</span>
-                                </div>
-                                <!-- Right side: Radio button -->
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="address-type"
-                                        value="office"
-                                        style="accent-color: #b6d63c"
-                                    />
-                                </div>
-                            </label>
-                        </div>
-                    </div>
+            <div id="address" class="content-section">
+                <p class="privacy-text">Address 1: 1234 Al-Madina Street, Al-Saif District, Riyadh 11564, Saudi Arabia</p>
+                <p class="privacy-text">Address 1: 1234 Al-Madina Street, Al-Saif District, Riyadh 11564, Saudi Arabia</p>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="register-address" placeholder=" New Address">
                 </div>
-            
-                <div class="form-address mt-2 mb-2">
-                    <label class="label-text">Area</label>
-                </br>
-                    <div class="d-flex align-items-center">
-                        <input type="text" id="area" required />
-                    </div>
-                </div>
-                <div class="form-address row mt-2 mb-2">
-                    <div class="col-6">
-                        <label class="label-text">Building</label>
-                    </br>
-                        <div class="d-flex align-items-center">
-                            <input type="text" id="building" required />
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <label class="label-text">Flat</label><span class="optional-text"> (Optional)</span>
-                    </br>
-                        <div class="">
-                            <input type="text" id="flat" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-address row mt-2 mb-2">
-                    <div class="col-6">
-                        <label class="label-text">Block</label>
-                    </br>
-                        <div class="">
-                            <input type="text" id="block" required />
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <label class="label-text">Street</label>
-                    </br>
-                        <div class="d-flex align-items-center">
-                            <input type="text" id="street" required />
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Error message for form submission -->
-                <span id="form-error" class="text-danger small"></span>
-                
-                <div class="row mt-5">
-                    <button type="button" class="btn btn-add-new center" id="buttonText" onclick="submitAddressForm()"> Save</button>
-                </div>
-            </form>
-            <div class="mt-4">
-                <div class="row mt-3">
-                    <div class="col-8">
-                      <div class="row align-items-start custom-row">
-                        <div class="col-auto">
-                          <span class="days-text">C 60 2 </span>
-                        </div>
-                        <div class="col-auto">
-                          <!-- Single button-like structure for 24 Days and Schedule -->
-                          <div class="">
-                            <span class="days-text">Jeddah</span>
-                            <span class="days-text">Note to rider: Green City</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <button class="btn btn-edit">Edit</button>
-                    </div>
-                    <div class="col-2">
-                      <button class="btn btn-del">Delete</button>
-                    </div>
-                  </div>
-            </div>
-                <!-- <button type="submit" class="btn btn-add-new text-center mt-3">Add New Address</button>
-                <div class="mb-3 mt-4 px-5">
-                    <input type="text" class="form-control" id="new-address" placeholder=" New Address">
-                </div> -->
             </div>
             <div id="-new-address" class="content-section">
                 
@@ -416,7 +293,7 @@
                             <input type="email" class="form-control" id="register-email" placeholder="Email">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="register-number" placeholder="Number">
+                            <input type="text" class="form-control" id="register-address" placeholder="Number">
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="register-address" placeholder="Address">
@@ -440,106 +317,6 @@
      <!-- /Subscribe Footer Section --> 
   <!-- Footer will be loaded here -->
   <div id="footer-placeholder"></div>
-
-
-  <script>
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const addressForm = document.getElementById('address-form');
-
-        if (!addressForm) {
-            console.error('Address form not found');
-            return;
-        }
-
-        addressForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent default form submission
-            submitAddressForm(); // Call the form submission function
-        });
-
-      
-    });
-
-    function submitAddressForm() {
-        const addressType = document.querySelector('input[name="address-type"]:checked')?.value;
-        const area = document.getElementById('area').value.trim();
-        const building = document.getElementById('building').value.trim();
-        const flat = document.getElementById('flat').value.trim();
-        const block = document.getElementById('block').value.trim();
-        const street = document.getElementById('street').value.trim();
-
-        // Validate required fields
-        if (!addressType || !area || !building || !block || !street) {
-            showToast('Please fill out all required fields', 'error');
-            return;
-        }
-
-        // Check if geolocation was retrieved
-        if (latitude === null || longitude === null) {
-            showToast('Unable to retrieve your current location', 'error');
-            return;
-        }
-
-        // Prepare the address data for API request
-        const addressData = {
-            type: addressType,
-            area: area,
-            building: building,
-            block: block,
-            street: street,
-            flat: flat || "", // Optional field
-            location: `${latitude},${longitude}` // User's location from geolocation
-        };
-
-        // Send the POST request using Axios
-        const apiUrl = `${apiBaseUrl}address`;
-        const token = localStorage.getItem("accessToken"); // Retrieve token
-
-        if (!token) {
-            showToast('Unauthorized: Please log in again.', 'error');
-            return;
-        }
-
-        axios
-            .post(apiUrl, addressData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then((response) => {
-                console.log("Address submitted successfully:", response.data);
-                showToast('Address saved successfully!', 'success');
-            })
-            .catch((error) => {
-                console.error('There was an error submitting the address:', error);
-                if (error.response && error.response.data.message) {
-                    showToast(`Address submission failed: ${error.response.data.message}`, 'error');
-                } else {
-                    showToast('Error submitting address. Please try again.', 'error');
-                }
-            });
-    }
-
-    // Toast notification function
-    function showToast(message, type) {
-        const toastContainer = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerText = message;
-        toastContainer.appendChild(toast);
-
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 60);
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-            toastContainer.removeChild(toast);
-        }, 4000);
-    }
-</script>
-
 
   <script>
     // Load footer.html into the placeholder div

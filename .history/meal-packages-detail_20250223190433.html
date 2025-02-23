@@ -273,102 +273,67 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (typeof apiBaseUrl === "undefined") {
-        console.error("apiBaseUrl is not defined!");
-        return;
-    }
+  document.addEventListener("DOMContentLoaded", async function() {
+      const apiUrl = "YOUR_API_ENDPOINT/menu-days"; // Replace with your actual API
+      const packageUrl = "YOUR_API_ENDPOINT/packages"; // Replace with package API
 
-    const apiUrl = `${apiBaseUrl}packages`;
-    const packageUrl = `${apiBaseUrl}menu-days`;
+      try {
+          // Fetch menu days
+          let response = await fetch(apiUrl, {
+              headers: { "Authorization": "Bearer YOUR_TOKEN" } // Add your auth token if needed
+          });
+          let data = await response.json();
 
-    const params = new URLSearchParams(window.location.search);
-    const packageId = params.get("id");
+          if (data.status === 200) {
+              const menuDays = data.data.menu_days;
+              const packageId = menuDays.length > 0 ? menuDays[0].package_id : null;
 
-    // Get token from localStorage
-    const token = localStorage.getItem("accessToken");
+              if (packageId) {
+                  // Fetch package details
+                  let packageResponse = await fetch(`${packageUrl}/${packageId}`, {
+                      headers: { "Authorization": "Bearer YOUR_TOKEN" }
+                  });
+                  let packageData = await packageResponse.json();
 
-    if (!packageId) {
-        console.error("❌ No package ID found in the URL.");
-        return;
-    }
+                  if (packageData.status === 200 && packageData.data.package) {
+                      const packageInfo = packageData.data.package;
 
-    if (!token) {
-        console.error("❌ No auth token found.");
-        return;
-    }
+                      // Update Package Details
+                      document.getElementById("package-title").innerText = packageInfo.title;
+                      document.getElementById("package-description").innerText = packageInfo.description;
+                      document.getElementById("package-image").src = packageInfo.image;
 
-    try {
-        // Fetch Package Details
-        const packageResponse = await fetch(`${apiUrl}/${packageId}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
+                      // Update Meals Per Day Options
+                      let mealOptionsContainer = document.getElementById("meal-options");
+                      mealOptionsContainer.innerHTML = `
+                          <span class="meal-option">${packageInfo.meals_per_day} Meals Per Day</span>
+                      `;
+                  }
+              }
 
-        const packageData = await packageResponse.json();
-        console.log("📦 Package Data:", packageData); // Debugging log
-
-        if (packageResponse.ok && packageData.data?.package) {
-            const packageInfo = packageData.data.package;
-
-            // Update Package Details
-            document.getElementById("package-title").innerText = packageInfo.title;
-            document.getElementById("package-description").innerText = packageInfo.description;
-            document.getElementById("package-image").src = packageInfo.image;
-
-            // Update Meals Per Day Options
-            document.getElementById("meal-options").innerHTML = `
-                <span class="meal-option">${packageInfo.meals_per_day} Meals Per Day</span>
-            `;
-        } else {
-            console.warn("⚠️ Failed to fetch package details:", packageData.message || "Invalid response");
-        }
-
-        // Fetch Menu Days
-        const menuResponse = await fetch(`${packageUrl}/${packageId}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        const menuData = await menuResponse.json();
-        console.log("🍽️ Full Menu Days Data:", menuData.data);
-
-        if (menuResponse.ok && menuData.data) {
-            const menuDays = menuData.data.menu_days || menuData.data; // Handle different response structures
-
-            if (Array.isArray(menuDays) && menuDays.length > 0) {
-                const menuDaysContainer = document.getElementById("menu-days");
-                menuDaysContainer.innerHTML = ""; // Clear previous content
-
-                menuDays.forEach(menu => {
-                    menuDaysContainer.innerHTML += `
-                        <div class="row">
-                            <h2 class="meal-package-detail-heading">${menu.day}</h2>
-                            <ul class="meal-package-detail-text">
-                                <li><strong>Breakfast:</strong> ${menu.breakfast || 'N/A'}</li>
-                                <li><strong>Lunch:</strong> ${menu.lunch || 'N/A'}</li>
-                                <li><strong>Dinner:</strong> ${menu.dinner || 'N/A'}</li>
-                            </ul>
-                        </div>
-                    `;
-                });
-            } else {
-                console.warn("⚠️ Menu days data is empty or not an array.");
-            }
-        } else {
-            console.error("❌ Failed to fetch menu days:", menuData.message || "Invalid response");
-        }
-    } catch (error) {
-        console.error("🔥 Error fetching data:", error);
-    }
-});
+              // Render Menu Days
+              let menuDaysContainer = document.getElementById("menu-days");
+              menuDaysContainer.innerHTML = "";
+              menuDays.forEach(menu => {
+                  menuDaysContainer.innerHTML += `
+                      <div class="row">
+                          <h2 class="meal-package-detail-heading">${menu.day}</h2>
+                          <ul class="meal-package-detail-text">
+                              <li>Breakfast: ${menu.breakfast}</li>
+                              <li>Lunch: ${menu.lunch}</li>
+                              <li>Dinner: ${menu.dinner}</li>
+                          </ul>
+                      </div>
+                  `;
+              });
+          } else {
+              console.error("Failed to fetch menu days.");
+          }
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
+  });
 </script>
-
-
 
   </main>
 

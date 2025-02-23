@@ -30,9 +30,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <script src="assets/js/constant.js"></script>
-  <!-- Add Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <!-- =======================================================
   * Template Name: eNno
@@ -134,22 +131,99 @@
               </div><!-- End Section Title -->
         
               <div class="container">
-                <div class="row">
+                <div class="row">   
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                      <img id="package-image" src="assets/img/meal-package-detail-img.png" alt="Meal Image" class="meal-image">
+                    <img src="assets/img/meal-package-detail-img.png" alt="Location Icon" class="meal-image">
                   </div>
                   <div class="col-lg-8 col-md-8 col-sm-12">
-                      <h2 id="package-title" class="meal-package-detail-heading"></h2>
-                      <p id="package-description" class="meal-package-detail-text"></p>
-              
-                      <div id="menu-days"></div> <!-- Dynamic Menu Days -->
-                      
-                      <div class="row mt-4">
-                          <h4>How Many Meals Per Day?</h4>
-                          <div id="meal-options"></div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Monday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Tuesday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Wednesday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Thursday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Friday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Saturday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <h2 class="meal-package-detail-heading">Sunday</h2>
+                      <ul class="meal-package-detail-text">
+                        <li >Breakfast: Greek yogurt with chia seeds, berries, and almonds.</li>
+                        <li>Lunch: Grilled chicken salad with mixed greens, avocado, and olive oil.</li>
+                        <li>Dinner: Baked salmon with steamed asparagus and quinoa.</li>
+                      </ul>
+                    </div>
+                    <div class="row mt-4">
+                      <h4>How Many Meals Per Day?</h4>
+                      <div id="meal-options">
+                          <span class="meal-option" data-value="1 Meal Per Day">1 Meal Per Day</span>
+                          <span class="meal-option" data-value="2 Meals Per Day">2 Meals Per Day</span>
+                          <span class="meal-option" data-value="3 Meals Per Day">3 Meals Per Day</span>
                       </div>
+                  
+                      <br>
+                  
+                      <div class="date-picker-container mt-3">
+                        <input type="date" id="datepicker" placeholder="Select Start Date" >
+                      </div>
+                  
+                      <script>
+                          // Toggle selection for multiple meal options
+                          $(document).ready(function () {
+                              $(".meal-option").on("click", function () {
+                                  $(this).toggleClass("selected");
+                              });
+                  
+                             
+                  
+                              // Clicking the calendar icon opens the date picker
+                              $(".calendar-icon").on("click", function () {
+                                  $("#datepicker").focus();
+                              });
+                          });
+                      </script>
+                    </div>
                   </div>
-              </div>
+                </div>
                 <div class="row mt-4">
                   <button class="btn btn-meal-details mt-2">Confirm My Order </button>
                 </div>
@@ -270,105 +344,6 @@
 </div>
 
 </section><!-- /News Section -->
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (typeof apiBaseUrl === "undefined") {
-        console.error("apiBaseUrl is not defined!");
-        return;
-    }
-
-    const apiUrl = `${apiBaseUrl}packages`;
-    const packageUrl = `${apiBaseUrl}menu-days`;
-
-    const params = new URLSearchParams(window.location.search);
-    const packageId = params.get("id");
-
-    // Get token from localStorage
-    const token = localStorage.getItem("accessToken");
-
-    if (!packageId) {
-        console.error("❌ No package ID found in the URL.");
-        return;
-    }
-
-    if (!token) {
-        console.error("❌ No auth token found.");
-        return;
-    }
-
-    try {
-        // Fetch Package Details
-        const packageResponse = await fetch(`${apiUrl}/${packageId}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        const packageData = await packageResponse.json();
-        console.log("📦 Package Data:", packageData); // Debugging log
-
-        if (packageResponse.ok && packageData.data?.package) {
-            const packageInfo = packageData.data.package;
-
-            // Update Package Details
-            document.getElementById("package-title").innerText = packageInfo.title;
-            document.getElementById("package-description").innerText = packageInfo.description;
-            document.getElementById("package-image").src = packageInfo.image;
-
-            // Update Meals Per Day Options
-            document.getElementById("meal-options").innerHTML = `
-                <span class="meal-option">${packageInfo.meals_per_day} Meals Per Day</span>
-            `;
-        } else {
-            console.warn("⚠️ Failed to fetch package details:", packageData.message || "Invalid response");
-        }
-
-        // Fetch Menu Days
-        const menuResponse = await fetch(`${packageUrl}/${packageId}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        const menuData = await menuResponse.json();
-        console.log("🍽️ Full Menu Days Data:", menuData.data);
-
-        if (menuResponse.ok && menuData.data) {
-            const menuDays = menuData.data.menu_days || menuData.data; // Handle different response structures
-
-            if (Array.isArray(menuDays) && menuDays.length > 0) {
-                const menuDaysContainer = document.getElementById("menu-days");
-                menuDaysContainer.innerHTML = ""; // Clear previous content
-
-                menuDays.forEach(menu => {
-                    menuDaysContainer.innerHTML += `
-                        <div class="row">
-                            <h2 class="meal-package-detail-heading">${menu.day}</h2>
-                            <ul class="meal-package-detail-text">
-                                <li><strong>Breakfast:</strong> ${menu.breakfast || 'N/A'}</li>
-                                <li><strong>Lunch:</strong> ${menu.lunch || 'N/A'}</li>
-                                <li><strong>Dinner:</strong> ${menu.dinner || 'N/A'}</li>
-                            </ul>
-                        </div>
-                    `;
-                });
-            } else {
-                console.warn("⚠️ Menu days data is empty or not an array.");
-            }
-        } else {
-            console.error("❌ Failed to fetch menu days:", menuData.message || "Invalid response");
-        }
-    } catch (error) {
-        console.error("🔥 Error fetching data:", error);
-    }
-});
-</script>
-
-
 
   </main>
 
