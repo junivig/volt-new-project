@@ -126,6 +126,11 @@
               <a href="meal-packages.html"><button class="btn btn-back">Back</button></a>
               <!-- Section Title -->
               <div class="container section-title" data-aos="fade-up">
+                <!-- <h4 class="about-us-text">Special Menu</h4> -->
+                <h2>One Day Experience Meal</h2>
+                <!-- <p>All in good taste elementum integer enim neque volutpat ac.</p>
+                  <h6 class="signature-inner-text">Massa placerat duis ultricies lacus sed turpis tincidunt id. Interdum varius sit amet mattis  enim.
+                    Quis hendrerit dolor magna eget est lorem ipsum dolor. Sagittis scelerisque purus semper.</h6> -->
               </div><!-- End Section Title -->
         
               <div class="container">
@@ -136,7 +141,6 @@
                   <div class="col-lg-8 col-md-8 col-sm-12">
                       <h2 id="package-title" class="meal-package-detail-heading"></h2>
                       <p id="package-description" class="meal-package-detail-text"></p>
-                      <h2 id="package-amount" class="meal-package-detail-heading"></h2>
               
                       <div id="menu-days"></div> <!-- Dynamic Menu Days -->
                       
@@ -148,21 +152,6 @@
                         <div class="date-picker-container mt-3">
                             <input type="date" id="datepicker" placeholder="Select Start Date">
                         </div>
-                        <script>
-                          // Toggle selection for multiple meal options
-                          $(document).ready(function () {
-                              $(".meal-option").on("click", function () {
-                                  $(this).toggleClass("selected");
-                              });
-                  
-                             
-                  
-                              // Clicking the calendar icon opens the date picker
-                              $(".calendar-icon").on("click", function () {
-                                  $("#datepicker").focus();
-                              });
-                          });
-                      </script>
                     </div>
                   </div>
               </div>
@@ -289,7 +278,7 @@
 
 
 <script>
- document.addEventListener("DOMContentLoaded", async function () {
+  document.addEventListener("DOMContentLoaded", async function () {
     if (typeof apiBaseUrl === "undefined") {
         console.error("❌ apiBaseUrl is not defined!");
         return;
@@ -299,7 +288,6 @@
     const params = new URLSearchParams(window.location.search);
     const packageId = params.get("id");
 
-    // Get token from localStorage
     const token = localStorage.getItem("accessToken");
 
     if (!packageId) {
@@ -334,19 +322,8 @@
             return;
         }
 
-        // Safely update package details
-        const titleElement = document.getElementById("package-title");
-if (titleElement) {
-    titleElement.innerHTML = `<h2>${packageInfo.title || "No title available"}</h2>`;
-
-    const amountElement = document.getElementById("package-amount");
-if (amountElement) {
-  amountElement.innerHTML = `<h4>${packageInfo.amount || "No amount available"}</h4>`;
-}
-}
-
-        const descriptionElement = document.getElementById("package-description");
-        if (descriptionElement) descriptionElement.innerText = packageInfo.description || "No description available";
+        document.getElementById("package-title")?.innerText = packageInfo.title || "No title available";
+        document.getElementById("package-description")?.innerText = packageInfo.description || "No description available";
 
         const imageElement = document.getElementById("package-image");
         if (imageElement) {
@@ -354,21 +331,33 @@ if (amountElement) {
             imageElement.alt = packageInfo.title || "Package Image";
         }
 
+        // ✅ Handle Meals Per Day
         const mealOptionsElement = document.getElementById("meal-options");
         if (mealOptionsElement) {
-            mealOptionsElement.innerHTML = packageInfo.meals_per_day
-                ? `<span class="meal-option">${packageInfo.meals_per_day} Meals Per Day</span>`
-                : `<span class="meal-option">Meals info unavailable</span>`;
+            mealOptionsElement.innerHTML = ""; // Clear previous content
+
+            const mealsPerDay = Number(packageInfo.meals_per_day); // Ensure it's a number
+            if (!isNaN(mealsPerDay) && mealsPerDay > 0) {
+                for (let i = 1; i <= mealsPerDay; i++) {
+                    const mealOption = document.createElement("span");
+                    mealOption.classList.add("meal-option");
+                    mealOption.innerText = `${i} Meals Per Day`;
+                    mealOption.dataset.value = i;
+                    mealOptionsElement.appendChild(mealOption);
+                }
+            } else {
+                mealOptionsElement.innerHTML = `<span class="meal-option">Meals info unavailable</span>`;
+            }
         }
 
-        // Show Menu Days
+        // ✅ Show menu days safely
         const menuDaysElement = document.getElementById("menu-days");
-        if (menuDaysElement && packageInfo.menu_days) {
+        if (menuDaysElement && Array.isArray(packageInfo.menu_days)) {
             let menuHtml = "";
             packageInfo.menu_days.forEach(day => {
                 menuHtml += `
                     <div class="menu-day">
-                        <h3 class="meal-package-detail-heading" >${day.day}</h3>
+                        <h3 class="meal-package-detail-heading">${day.day || "Unknown Day"}</h3>
                         <ul class="meal-package-detail-text">
                             <li><strong>Breakfast:</strong> ${day.breakfast || 'N/A'}</li>
                             <li><strong>Lunch:</strong> ${day.lunch || 'N/A'}</li>
@@ -378,13 +367,21 @@ if (amountElement) {
                 `;
             });
             menuDaysElement.innerHTML = menuHtml;
+        } else {
+            menuDaysElement.innerHTML = "<p>⚠️ No menu data available.</p>";
         }
+
     } catch (error) {
         console.error("🔥 Error fetching package data:", error.message);
     }
+
+    // ✅ Calendar functionality
+    document.querySelector(".calendar-icon")?.addEventListener("click", function () {
+        document.getElementById("datepicker")?.focus();
+    });
 });
 
-</script>
+  </script>
 
 
 

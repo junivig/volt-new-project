@@ -126,6 +126,11 @@
               <a href="meal-packages.html"><button class="btn btn-back">Back</button></a>
               <!-- Section Title -->
               <div class="container section-title" data-aos="fade-up">
+                <!-- <h4 class="about-us-text">Special Menu</h4> -->
+                <h2>One Day Experience Meal</h2>
+                <!-- <p>All in good taste elementum integer enim neque volutpat ac.</p>
+                  <h6 class="signature-inner-text">Massa placerat duis ultricies lacus sed turpis tincidunt id. Interdum varius sit amet mattis  enim.
+                    Quis hendrerit dolor magna eget est lorem ipsum dolor. Sagittis scelerisque purus semper.</h6> -->
               </div><!-- End Section Title -->
         
               <div class="container">
@@ -136,34 +141,39 @@
                   <div class="col-lg-8 col-md-8 col-sm-12">
                       <h2 id="package-title" class="meal-package-detail-heading"></h2>
                       <p id="package-description" class="meal-package-detail-text"></p>
-                      <h2 id="package-amount" class="meal-package-detail-heading"></h2>
               
                       <div id="menu-days"></div> <!-- Dynamic Menu Days -->
                       
                       <div class="row mt-4">
                         <h4>How Many Meals Per Day?</h4>
-                        <div id="meal-options"></div>
+                        <div id="meal-options">
+                            <span class="meal-option" data-value="1 Meal Per Day">1 Meal Per Day</span>
+                            <span class="meal-option" data-value="2 Meals Per Day">2 Meals Per Day</span>
+                            <span class="meal-option" data-value="3 Meals Per Day">3 Meals Per Day</span>
+                        </div>
+                    
                         <br>
                     
                         <div class="date-picker-container mt-3">
-                            <input type="date" id="datepicker" placeholder="Select Start Date">
+                          <input type="date" id="datepicker" placeholder="Select Start Date" >
                         </div>
+                    
                         <script>
-                          // Toggle selection for multiple meal options
-                          $(document).ready(function () {
-                              $(".meal-option").on("click", function () {
-                                  $(this).toggleClass("selected");
-                              });
-                  
-                             
-                  
-                              // Clicking the calendar icon opens the date picker
-                              $(".calendar-icon").on("click", function () {
-                                  $("#datepicker").focus();
-                              });
-                          });
-                      </script>
-                    </div>
+                            // Toggle selection for multiple meal options
+                            $(document).ready(function () {
+                                $(".meal-option").on("click", function () {
+                                    $(this).toggleClass("selected");
+                                });
+                    
+                               
+                    
+                                // Clicking the calendar icon opens the date picker
+                                $(".calendar-icon").on("click", function () {
+                                    $("#datepicker").focus();
+                                });
+                            });
+                        </script>
+                      </div>
                   </div>
               </div>
                 <div class="row mt-4">
@@ -336,14 +346,7 @@
 
         // Safely update package details
         const titleElement = document.getElementById("package-title");
-if (titleElement) {
-    titleElement.innerHTML = `<h2>${packageInfo.title || "No title available"}</h2>`;
-
-    const amountElement = document.getElementById("package-amount");
-if (amountElement) {
-  amountElement.innerHTML = `<h4>${packageInfo.amount || "No amount available"}</h4>`;
-}
-}
+        if (titleElement) titleElement.innerText = packageInfo.title || "No title available";
 
         const descriptionElement = document.getElementById("package-description");
         if (descriptionElement) descriptionElement.innerText = packageInfo.description || "No description available";

@@ -126,6 +126,11 @@
               <a href="meal-packages.html"><button class="btn btn-back">Back</button></a>
               <!-- Section Title -->
               <div class="container section-title" data-aos="fade-up">
+                <!-- <h4 class="about-us-text">Special Menu</h4> -->
+                <h2>One Day Experience Meal</h2>
+                <!-- <p>All in good taste elementum integer enim neque volutpat ac.</p>
+                  <h6 class="signature-inner-text">Massa placerat duis ultricies lacus sed turpis tincidunt id. Interdum varius sit amet mattis  enim.
+                    Quis hendrerit dolor magna eget est lorem ipsum dolor. Sagittis scelerisque purus semper.</h6> -->
               </div><!-- End Section Title -->
         
               <div class="container">
@@ -136,34 +141,13 @@
                   <div class="col-lg-8 col-md-8 col-sm-12">
                       <h2 id="package-title" class="meal-package-detail-heading"></h2>
                       <p id="package-description" class="meal-package-detail-text"></p>
-                      <h2 id="package-amount" class="meal-package-detail-heading"></h2>
               
                       <div id="menu-days"></div> <!-- Dynamic Menu Days -->
                       
                       <div class="row mt-4">
-                        <h4>How Many Meals Per Day?</h4>
-                        <div id="meal-options"></div>
-                        <br>
-                    
-                        <div class="date-picker-container mt-3">
-                            <input type="date" id="datepicker" placeholder="Select Start Date">
-                        </div>
-                        <script>
-                          // Toggle selection for multiple meal options
-                          $(document).ready(function () {
-                              $(".meal-option").on("click", function () {
-                                  $(this).toggleClass("selected");
-                              });
-                  
-                             
-                  
-                              // Clicking the calendar icon opens the date picker
-                              $(".calendar-icon").on("click", function () {
-                                  $("#datepicker").focus();
-                              });
-                          });
-                      </script>
-                    </div>
+                          <h4>How Many Meals Per Day?</h4>
+                          <div id="meal-options"></div>
+                      </div>
                   </div>
               </div>
                 <div class="row mt-4">
@@ -312,76 +296,37 @@
         return;
     }
 
-    try {
-        const response = await fetch(`${apiUrl}/${packageId}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
+    $.ajax({
+        url: apiUrl,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            if (response.status === 200) {
+                const menuDays = response.data.menu_days;
+                let htmlContent = "";
+
+                menuDays.forEach(day => {
+                    htmlContent += `
+                        <div class="row">
+                            <h2 class="meal-package-detail-heading">${day.day}</h2>
+                            <ul class="meal-package-detail-text">
+                                <li>Breakfast: ${day.breakfast}</li>
+                                <li>Lunch: ${day.lunch}</li>
+                                <li>Dinner: ${day.dinner}</li>
+                            </ul>
+                        </div>
+                    `;
+                });
+
+                $("#meal-container").html(htmlContent);
+            } else {
+                console.error("Error: ", response.message);
             }
-        });
-
-        const responseData = await response.json();
-        console.log("📦 Package Data:", responseData);
-
-        if (!response.ok) {
-            throw new Error(responseData.message || "Failed to fetch package details");
+        },
+        error: function (xhr, status, error) {
+            console.error("API Error: ", error);
         }
-
-        const packageInfo = responseData?.data?.package;
-        if (!packageInfo) {
-            console.warn("⚠️ No package data available.");
-            return;
-        }
-
-        // Safely update package details
-        const titleElement = document.getElementById("package-title");
-if (titleElement) {
-    titleElement.innerHTML = `<h2>${packageInfo.title || "No title available"}</h2>`;
-
-    const amountElement = document.getElementById("package-amount");
-if (amountElement) {
-  amountElement.innerHTML = `<h4>${packageInfo.amount || "No amount available"}</h4>`;
-}
-}
-
-        const descriptionElement = document.getElementById("package-description");
-        if (descriptionElement) descriptionElement.innerText = packageInfo.description || "No description available";
-
-        const imageElement = document.getElementById("package-image");
-        if (imageElement) {
-            imageElement.src = packageInfo.image || "default-image.jpg";
-            imageElement.alt = packageInfo.title || "Package Image";
-        }
-
-        const mealOptionsElement = document.getElementById("meal-options");
-        if (mealOptionsElement) {
-            mealOptionsElement.innerHTML = packageInfo.meals_per_day
-                ? `<span class="meal-option">${packageInfo.meals_per_day} Meals Per Day</span>`
-                : `<span class="meal-option">Meals info unavailable</span>`;
-        }
-
-        // Show Menu Days
-        const menuDaysElement = document.getElementById("menu-days");
-        if (menuDaysElement && packageInfo.menu_days) {
-            let menuHtml = "";
-            packageInfo.menu_days.forEach(day => {
-                menuHtml += `
-                    <div class="menu-day">
-                        <h3 class="meal-package-detail-heading" >${day.day}</h3>
-                        <ul class="meal-package-detail-text">
-                            <li><strong>Breakfast:</strong> ${day.breakfast || 'N/A'}</li>
-                            <li><strong>Lunch:</strong> ${day.lunch || 'N/A'}</li>
-                            <li><strong>Dinner:</strong> ${day.dinner || 'N/A'}</li>
-                        </ul>
-                    </div>
-                `;
-            });
-            menuDaysElement.innerHTML = menuHtml;
-        }
-    } catch (error) {
-        console.error("🔥 Error fetching package data:", error.message);
-    }
+    });
 });
 
 </script>

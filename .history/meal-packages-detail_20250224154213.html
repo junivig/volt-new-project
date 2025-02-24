@@ -136,7 +136,6 @@
                   <div class="col-lg-8 col-md-8 col-sm-12">
                       <h2 id="package-title" class="meal-package-detail-heading"></h2>
                       <p id="package-description" class="meal-package-detail-text"></p>
-                      <h2 id="package-amount" class="meal-package-detail-heading"></h2>
               
                       <div id="menu-days"></div> <!-- Dynamic Menu Days -->
                       
@@ -335,15 +334,8 @@
         }
 
         // Safely update package details
-        const titleElement = document.getElementById("package-title");
-if (titleElement) {
-    titleElement.innerHTML = `<h2>${packageInfo.title || "No title available"}</h2>`;
-
-    const amountElement = document.getElementById("package-amount");
-if (amountElement) {
-  amountElement.innerHTML = `<h4>${packageInfo.amount || "No amount available"}</h4>`;
-}
-}
+        const titleElement = document.getElementById("<h3>package-title</h3>");
+        if (titleElement) titleElement.innerText = packageInfo.title || "No title available";
 
         const descriptionElement = document.getElementById("package-description");
         if (descriptionElement) descriptionElement.innerText = packageInfo.description || "No description available";
