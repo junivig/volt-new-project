@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <script src="assets/js/constant.js"></script>
+  <!-- Add Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .top-section {
+            height: 40vh;
+            background-image: url('assets/img/bg-mountain.png');
+            background-size: cover;
+            background-color: rgba(53, 155, 65, 0.7); /* Light green with 50% transparency */
+            background-blend-mode: overlay;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .back-button {
+            position: absolute; 
+            left: 30px;
+            top: 10vh;
+            color: white;
+            font-size: 1rem;
+            text-decoration: underline;
+        }
+        .tabs-container {
+            position: relative;
+            justify-content: center;
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: -8vh;
+            z-index: 10;
+        }
+        .tab-button.active {
+            width: 180px;
+            height: 120px;
+            background-color: #F2F2F2;
+            border: 2px solid #518F2B;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tab-button {
+            width: 180px;
+            height: 120px;
+            background-color: #F2F2F2;
+            border: 2px solid #F2F2F2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tab-button i {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .btn-light-green {
+            background-color: #BCD531 !important;
+            color: white !important;
+            font-size: small;
+            padding: 5px 40px;
+            border-radius: 40px;
+        }
+        .btn-add-new {
+            background-color: #BCD531 !important;
+            color: white !important;
+            font-size: small;
+            padding: 10px 40px;
+            border-radius: 40px;
+        }
+        .btn-light-gray {
+            background-color: #F2F2F2 !important;
+            color: #BCD531 !important;
+            font-size: small;
+            padding: 5px 40px;
+            border-radius: 40px;
+            margin-right: 10px;
+        }
+        .form-control {
+            padding: 10px 20px;
+            color: grey !important;
+        }
+        .privacy-text {
+            color: black;
+            font-size: large;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .icon-size {
+            width: 35px;
+            height: 35px;
+            margin-bottom: 5px;
+        }
+        .table th {
+            font-weight: bold;
+        }
+        .order-id {
+            color: green;
+            text-decoration: none;
+        }
+        .my-account-heading
+        {
+            color: #fff;
+        }
+        .btn-view {
+            background-color: #c4d82e;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            padding: 5px 15px;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+    <header id="header" class="header ">
+        <div class="container-fluid  top-header">
+          <div class="container-xl">
+              <div class="row align-items-center">
+                  <div class="col-md-8 d-flex align-items-center">
+                    <nav id="navmenu" class="navmenu">
+                      <ul>
+                    <li class="">
+                      <img src="assets/img/location-icon.png" alt="Location Icon" class="icon-right">
+                      <span class="top-header-text">Address, Fox 99 Roving St, Big City PKU</span>
+                  </li>
+                    <li class="">
+                      <img src="assets/img/email-icon.png" alt="Email Icon" class="icon-right">
+                      <span class="top-header-text">hello@awesomesite.com</span>
+                  </li>
+                  <li class="">
+                    <img src="assets/img/phone-icon.png" alt="Phone Icon" class="icon-right">
+                    <span class="top-header-text">+123-234-1234</span>
+                </li>       
+                      </ul>
+                    </nav>          
+                  </div>
+                  <div class="col-md-4 text-end">
+                      <a href="auth.html" >Register</a>
+                      <a href="auth.html">Login</a>
+                      <a href="my-account.html">My Account</a>
+                  </div>
+              </div>
+            </div>
+      </div>
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    
+          <a href="index.html" class="logo d-flex align-items-center me-auto">
+            
+            <img src="assets/img/logo.png" alt="Logo Image">
+          </a>
+    
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="index.html" class="active">HOMEPAGE</a></li>
+              <li><a href="about.html">ABOUT US</a></li>
+              <li><a href="menu.html">MENU</a></li>
+              <li><a href="meal-packages.html">MEAL PACKAGES</a></li>
+              <li><a href="wishlist.html">WISHLIST</a></li>
+              <li><a href="cart.html">MY CART</a></li>
+              <li><a href="privacy-and-policy.html">PRIVACY & POLICY</a></li>
+              <li><a href="contact.html">CONTACT US</a></li>
+              <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Dropdown 1</a></li>
+                  <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul>
+                      <li><a href="#">Deep Dropdown 1</a></li>
+                      <li><a href="#">Deep Dropdown 2</a></li>
+                      <li><a href="#">Deep Dropdown 3</a></li>
+                      <li><a href="#">Deep Dropdown 4</a></li>
+                      <li><a href="#">Deep Dropdown 5</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#">Dropdown 2</a></li>
+                  <li><a href="#">Dropdown 3</a></li>
+                  <li><a href="#">Dropdown 4</a></li>
+                </ul>
+              </li> -->
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+    
+          <!-- <a class="btn-getstarted" href="index.html#about">Get Started</a> -->
+    
+        </div>
+      </header>
+    
+    <div class="top-section">
+        <a href="index.html" class="back-button"><p class="back-button">Back</p></a>
+        <h1 class="my-account-heading">MY ACCOUNT</h1>
+    </div>
+    <div class="row justify-content-center mb-5">
+    <div class="col-md-7">
+        <div class="tabs-container">
+            <div class="tab-button" onclick="showSection('orders')">
+                <img src="assets/img/ic-orders.png" alt="Order Icon" class="icon-size"/>
+                Orders
+            </div>
+            <div class="tab-button" onclick="showSection('edit-account')">
+                <img src="assets/img/ic-edit-account.png" alt="Edit Icon" class="icon-size"/>
+                Edit Account
+            </div>
+            <div class="tab-button" onclick="showSection('address')">
+                <img src="assets/img/ic-location.png" alt="Location Icon" class="icon-size"/>
+                Address
+            </div>
+            <div class="tab-button" onclick="showSection('logout')">
+                <img src="assets/img/ic-logout.png" alt="Logout Icon" class="icon-size"/>
+                Logout
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div id="orders" class="content-section active">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Orders</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#" class="order-id">#965</a></td>
+                                <td>September 24, 2020</td>
+                                <td>on hold</td>
+                                <td><strong>114.40$</strong> for 4 items</td>
+                                <td><a href="order-detail.html"><button class="btn btn-view">View</button></a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="order-id">#964</a></td>
+                                <td>September 24, 2020</td>
+                                <td>on hold</td>
+                                <td><strong>12.50$</strong> for 1 item</td>
+                                <td><a href="order-detail.html"><button class="btn btn-view">View</button></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="address" class="content-section text-center">
+                 <form id="address-form">
+                <div class="row mb-4 mb-2">
+                    <label class="col-12 mb-2 label-text">Address Type</label>
+                    <div class="col-md-6 mt-2">
+                        <div class="card-address">
+                            <label class="d-flex justify-content-between align-items-center" style="cursor: pointer;">
+                                <!-- Left side: Icon and text -->
+                                <div class="d-flex align-items-center">
+                                    <img src="assets/img/home-icon-address.png" alt="Home Icon" class="mr-2" />
+                                    <span>Home</span>
+                                </div>
+                                <!-- Right side: Radio button -->
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="address-type" 
+                                        value="home"
+                                        style="accent-color: #b6d63c"
+                                    />
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6 mt-2">
+                        <div class="card-address">
+                            <label class="d-flex justify-content-between align-items-center" style="cursor: pointer;">
+                                <!-- Left side: Icon and text -->
+                                <div class="d-flex align-items-center">
+                                    <img src="assets/img/office-icon.png" alt="Office Icon" class="mr-2" />
+                                    <span>Office</span>
+                                </div>
+                                <!-- Right side: Radio button -->
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="address-type"
+                                        value="office"
+                                        style="accent-color: #b6d63c"
+                                    />
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-address mt-2 mb-2">
+                    <label class="label-text">Area</label>
+                </br>
+                    <div class="d-flex align-items-center">
+                        <input type="text" id="area" required />
+                    </div>
+                </div>
+                <div class="form-address row mt-2 mb-2">
+                    <div class="col-6">
+                        <label class="label-text">Building</label>
+                    </br>
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="building" required />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="label-text">Flat</label><span class="optional-text"> (Optional)</span>
+                    </br>
+                        <div class="">
+                            <input type="text" id="flat" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-address row mt-2 mb-2">
+                    <div class="col-6">
+                        <label class="label-text">Block</label>
+                    </br>
+                        <div class="">
+                            <input type="text" id="block" required />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="label-text">Street</label>
+                    </br>
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="street" required />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Error message for form submission -->
+                <span id="form-error" class="text-danger small"></span>
+                
+                <div class="row mt-5">
+                    <button type="button" class="btn btn-add-new center" id="buttonText" onclick="submitAddressForm()"> Save</button>
+                </div>
+            </form>
+            <div class="mt-4">
+                <div class="row mt-3">
+                    <div class="col-8">
+                      <div class="row align-items-start custom-row">
+                        <div class="col-auto">
+                          <span class="days-text">C 60 2 </span>
+                        </div>
+                        <div class="col-auto">
+                          <!-- Single button-like structure for 24 Days and Schedule -->
+                          <div class="">
+                            <span class="days-text">Jeddah</span>
+                            <span class="days-text">Note to rider: Green City</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <button class="btn btn-edit">Edit</button>
+                    </div>
+                    <div class="col-2">
+                      <button class="btn btn-del">Delete</button>
+                    </div>
+                  </div>
+            </div>
+                <!-- <button type="submit" class="btn btn-add-new text-center mt-3">Add New Address</button>
+                <div class="mb-3 mt-4 px-5">
+                    <input type="text" class="form-control" id="new-address" placeholder=" New Address">
+                </div> -->
+            </div>
+            <div id="-new-address" class="content-section">
+                
+            </div>
+            <div id="edit-account" class="content-section">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="register-username" placeholder="Username">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="register-fullname" placeholder="Full Name">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="register-email" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="register-number" placeholder="Number">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="register-address" placeholder="Address">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="register-password" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-light-green">Save Changes</button>
+                    </form>
+            </div>
+            <div id="logout" class="content-section">
+                <p class="privacy-text">Are you sure you want to logout?</p>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-light-gray">No</button>
+                    <button type="submit" class="btn btn-light-green">Yes</button>
+                </div>
+            </div>
+            <!-- Toast container -->
+          <div id="toast-container"
+          style="position: fixed; bottom: 20px; right: 20px; z-index: 9999"
+        ></div>
+        </div>
+    </div>
+    </div>
+     <!-- /Subscribe Footer Section --> 
+  <!-- Footer will be loaded here -->
+  <div id="footer-placeholder"></div>
+
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const addressForm = document.getElementById('address-form');
+
+        if (!addressForm) {
+            console.error('Address form not found');
+            return;
+        }
+
+        addressForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+            submitAddressForm(); // Call the form submission function
+        });
+
+      
+    });
+
+    function submitAddressForm() {
+        const addressType = document.querySelector('input[name="address-type"]:checked')?.value;
+        const area = document.getElementById('area').value.trim();
+        const building = document.getElementById('building').value.trim();
+        const flat = document.getElementById('flat').value.trim();
+        const block = document.getElementById('block').value.trim();
+        const street = document.getElementById('street').value.trim();
+
+        // Validate required fields
+        if (!addressType || !area || !building || !block || !street) {
+            showToast('Please fill out all required fields', 'error');
+            return;
+        }
+
+        // Prepare the address data for API request
+        const addressData = {
+            type: addressType,
+            area: area,
+            building: building,
+            block: block,
+            street: street,
+            flat: flat || "", // Optional field
+        };
+
+        // Send the POST request using Axios
+        const apiUrl = `${apiBaseUrl}address`;
+        const token = localStorage.getItem("accessToken"); // Retrieve token
+
+        if (!token) {
+            showToast('Unauthorized: Please log in again.', 'error');
+            return;
+        }
+
+        axios
+            .post(apiUrl, addressData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                console.log("Address submitted successfully:", response.data);
+                showToast('Address saved successfully!', 'success');
+            })
+            .catch((error) => {
+                console.error('There was an error submitting the address:', error);
+                if (error.response && error.response.data.message) {
+                    showToast(`Address submission failed: ${error.response.data.message}`, 'error');
+                } else {
+                    showToast('Error submitting address. Please try again.', 'error');
+                }
+            });
+    }
+
+    // Toast notification function
+    function showToast(message, type) {
+        const toastContainer = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerText = message;
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 60);
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            toastContainer.removeChild(toast);
+        }, 4000);
+    }
+</script>
+
+
+  <script>
+    // Load footer.html into the placeholder div
+    fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading footer:", error));
+</script>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

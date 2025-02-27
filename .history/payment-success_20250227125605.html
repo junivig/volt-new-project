@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Payment - Voltfood</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <script src="assets/js/constant.js"></script>
+  <!-- Add Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- =======================================================
+  * Template Name: eNno
+  * Template URL: https://bootstrapmade.com/enno-free-simple-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="about-page">
+
+  <header id="header" class="header ">
+    <div class="container-fluid  top-header">
+      <div class="container-xl">
+          <div class="row align-items-center">
+              <div class="col-md-8 d-flex align-items-center">
+                <nav id="navmenu" class="navmenu">
+                  <ul>
+                <li class="">
+                  <img src="assets/img/location-icon.png" alt="Location Icon" class="icon-right">
+                  <span class="top-header-text">Address, Fox 99 Roving St, Big City PKU</span>
+              </li>
+                <li class="">
+                  <img src="assets/img/email-icon.png" alt="Email Icon" class="icon-right">
+                  <span class="top-header-text">hello@awesomesite.com</span>
+              </li>
+              <li class="">
+                <img src="assets/img/phone-icon.png" alt="Phone Icon" class="icon-right">
+                <span class="top-header-text">+123-234-1234</span>
+            </li>       
+                  </ul>
+                </nav>          
+              </div>
+              <div class="col-md-4 text-end">
+                  <a href="auth.html" >Register</a>
+                  <a href="auth.html">Login</a>
+                  <a href="my-account.html">My Account</a>
+              </div>
+          </div>
+        </div>
+  </div>
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        
+        <img src="assets/img/logo.png" alt="Logo Image">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">HOMEPAGE</a></li>
+          <li><a href="about.html">ABOUT US</a></li>
+          <li><a href="menu.html">MENU</a></li>
+          <li><a href="meal-packages.html">MEAL PACKAGES</a></li>
+          <li><a href="wishlist.html">WISHLIST</a></li>
+          <li><a href="cart.html">MY CART</a></li>
+          <li><a href="privacy-and-policy.html">PRIVACY & POLICY</a></li>
+          <li><a href="contact.html">CONTACT US</a></li>
+          <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li> -->
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <!-- <a class="btn-getstarted" href="index.html#about">Get Started</a> -->
+
+    </div>
+  </header>
+
+  <main class="main">
+
+
+        <!-- About Section -->
+        <section id="services" class="services section light-background bg-image">
+
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Thank You !! </h2>
+            <p id="payment-status">Checking your payment status...</p>
+            <span class="chef-inner-text">Thank you for making a payment. We will process your request and get back to you soon.</span>
+           
+          </div><!-- End Section Title -->
+
+          <div class="mt-5">
+            <a href="order-detail.html"><button type="button" class="btn btn-add-new center"> Order Details</button></a>
+
+          </div>
+    
+        </section><!-- /Services Section -->
+
+
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const apiBaseUrl = "https://api.voltfood.co"; // Your API base URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = localStorage.getItem("accessToken");
+        const checkoutId = urlParams.get("id"); // Get checkout ID from URL
+
+        async function getPaymentStatus() {
+            if (!checkoutId) {
+                console.error("❌ No checkout ID found in URL parameters.");
+                document.getElementById("payment-status").innerText = "❌ No checkout ID found!";
+                return;
+            }
+
+            const resourcePath = `/v1/checkouts/${checkoutId}/payment`;
+            const apiUrl = `${apiBaseUrl}/api/get-payment-status?resourcePath=${encodeURIComponent(resourcePath)}`;
+
+            try {
+                console.log(`📡 Fetching payment status from: ${apiUrl}`);
+
+                const response = await fetch(apiUrl, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+                const data = await response.json();
+
+                // 📢 Log the full API response
+                console.log("📢 Full API Response:", data);
+
+                // 🔹 Log key response details
+                console.log("🔹 Status Code:", data.status);
+                console.log("🔹 Message:", data.message);
+                console.log("🔹 Result Code:", data.data?.result?.code);
+                console.log("🔹 Description:", data.data?.result?.description);
+                console.log("🔹 Timestamp:", data.data?.timestamp);
+                console.log("🔹 NDC:", data.data?.ndc);
+
+                // ✅ Handle payment status display
+                const paymentStatusElement = document.getElementById("payment-status");
+
+                if (data.data?.result?.code === "000.100.110" || data.data?.result?.code === "000.200.000") {
+                    paymentStatusElement.innerText = `✅ Payment Successful: ${data.data?.result?.description}`;
+                } else {
+                    paymentStatusElement.innerText = `⚠ Payment Failed: ${data.data?.result?.description}`;
+                }
+            } catch (error) {
+                console.error("🔥 Error fetching payment status:", error);
+                document.getElementById("payment-status").innerText = "❌ An error occurred while fetching payment status.";
+            }
+        }
+
+        // 🔹 Call the function immediately when the page loads
+        await getPaymentStatus();
+    });
+</script>
+  
+
+
+ <!-- /Subscribe Footer Section --> 
+  <!-- Footer will be loaded here -->
+  <div id="footer-placeholder"></div>
+
+  <script>
+    // Load footer.html into the placeholder div
+    fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading footer:", error));
+</script>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script>
+    fetch("footer.html")
+      .then(response => response.text())
+      .then(data => document.getElementById("footer-placeholder").innerHTML = data)
+      .catch(error => console.error("Error loading the footer:", error));
+  </script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Cart - Voltfood</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <script src="assets/js/constant.js"></script>
+  <!-- Add Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- =======================================================
+  * Template Name: eNno
+  * Template URL: https://bootstrapmade.com/enno-free-simple-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header ">
+        <div class="container-fluid  top-header">
+          <div class="container-xl">
+              <div class="row align-items-center">
+                  <div class="col-md-8 d-flex align-items-center">
+                    <nav id="navmenu" class="navmenu">
+                      <ul>
+                    <li class="">
+                      <img src="assets/img/location-icon.png" alt="Location Icon" class="icon-right">
+                      <span class="top-header-text">Address, Fox 99 Roving St, Big City PKU</span>
+                  </li>
+                    <li class="">
+                      <img src="assets/img/email-icon.png" alt="Email Icon" class="icon-right">
+                      <span class="top-header-text">hello@awesomesite.com</span>
+                  </li>
+                  <li class="">
+                    <img src="assets/img/phone-icon.png" alt="Phone Icon" class="icon-right">
+                    <span class="top-header-text">+123-234-1234</span>
+                </li>       
+                      </ul>
+                    </nav>          
+                  </div>
+                  <div class="col-md-4 text-end">
+                      <a href="auth.html" >Register</a>
+                      <a href="auth.html">Login</a>
+                      <a href="my-account.html">My Account</a>
+                  </div>
+              </div>
+            </div>
+      </div>
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    
+          <a href="index.html" class="logo d-flex align-items-center me-auto">
+            
+            <img src="assets/img/logo.png" alt="Logo Image">
+          </a>
+    
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="index.html" class="active">HOMEPAGE</a></li>
+              <li><a href="about.html">ABOUT US</a></li>
+              <li><a href="menu.html">MENU</a></li>
+              <li><a href="meal-packages.html">MEAL PACKAGES</a></li>
+              <li><a href="wishlist.html">WISHLIST</a></li>
+              <li><a href="cart.html">MY CART</a></li>
+              <li><a href="privacy-and-policy.html">PRIVACY & POLICY</a></li>
+              <li><a href="contact.html">CONTACT US</a></li>
+              <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Dropdown 1</a></li>
+                  <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul>
+                      <li><a href="#">Deep Dropdown 1</a></li>
+                      <li><a href="#">Deep Dropdown 2</a></li>
+                      <li><a href="#">Deep Dropdown 3</a></li>
+                      <li><a href="#">Deep Dropdown 4</a></li>
+                      <li><a href="#">Deep Dropdown 5</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#">Dropdown 2</a></li>
+                  <li><a href="#">Dropdown 3</a></li>
+                  <li><a href="#">Dropdown 4</a></li>
+                </ul>
+              </li> -->
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+    
+          <!-- <a class="btn-getstarted" href="index.html#about">Get Started</a> -->
+    
+        </div>
+      </header>
+
+  <main class="main">
+
+
+        <!-- Cart Section -->
+        <section id="testimonials" class="testimonials section-inner light-background bg-image">
+            <a href="menu.html"><button class="btn btn-back">Back</button></a>
+            <div class="container mt-5">
+                <div class="row">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-table-body">
+                            <!-- Cart items will be dynamically added here -->
+                        </tbody>
+                    </table>
+                    
+            
+                    
+                </div>
+                <div class="row mt-4">
+                    <!-- Cart Totals Section -->
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-4">
+                        <div class="cart-summary">
+                            <h5>Cart Totals</h5>
+                            <table class="table">
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td id="subtotal-amount">0.00 SR</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Order Total</strong></td>
+                                    <td><strong id="order-total-amount">0.00 SR</strong></td>
+                                </tr>
+                            </table>
+                            <a href="checkout.html">
+                                <button class="btn proceed-btn w-100">Proceed to Checkout</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      <!-- /Cart Section -->
+      <div id="toast-container" class="toast-container"></div>  
+
+  </main>
+
+
+  <script>
+    const apiUrl = "https://api.voltfood.co/api/cart";  // Ensure correct API base URL
+    const token = localStorage.getItem("accessToken");
+
+    async function fetchCart() {
+        if (!token) {
+            console.error("Access token not found!");
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+
+            if (result.status === 200 && result.data.cart.length > 0) {
+                const cartTableBody = document.querySelector(".cart-table tbody");
+                cartTableBody.innerHTML = ""; 
+
+                let totalCartPrice = 0;
+
+                result.data.cart.forEach(cartItem => {
+                    const product = cartItem.product;
+                    const itemTotal = parseFloat(product.price) * cartItem.quantity;
+                    totalCartPrice += itemTotal;
+
+                    const row = document.createElement("tr");
+                    row.setAttribute("data-product-id", product.id);
+
+                    row.innerHTML = `
+                        <td><img src="${imgBaseUrl}${product.productImage}" alt="${product.title}" /></td>
+                        <td>${product.name}</td>
+                        <td>${product.price} SR</td>
+                        <td>
+                            <div class="quantity-control">
+                                <button class="decrease" data-id="${cartItem.id}" data-product-id="${product.id}">-</button>
+                                <input type="text" class="quantity-input" value="${cartItem.quantity}" data-id="${cartItem.id}" readonly>
+                                <button class="increase" data-id="${cartItem.id}" data-product-id="${product.id}">+</button>
+                            </div>
+                        </td>
+                        <td class="item-total">${itemTotal.toFixed(2)} SR</td>
+                        <td><span class="remove-btn" data-id="${cartItem.id}">&times;</span></td>
+                    `;
+
+                    cartTableBody.appendChild(row);
+                });
+
+                updateCartTotal(totalCartPrice);
+            } else {
+                document.querySelector(".cart-table tbody").innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
+                updateCartTotal(0);
+            }
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+            document.querySelector(".cart-table tbody").innerHTML = "<tr><td colspan='6'>Failed to load cart.</td></tr>";
+            updateCartTotal(0);
+        }
+    }
+
+    function updateCartTotal(totalPrice) {
+        document.getElementById("subtotal-amount").innerText = `${totalPrice.toFixed(2)} SR`;
+        document.getElementById("order-total-amount").innerText = `${totalPrice.toFixed(2)} SR`;
+    }
+
+    document.querySelector(".cart-table tbody").addEventListener("click", function (event) {
+        if (event.target.classList.contains("increase")) {
+            const cartItemId = event.target.getAttribute("data-id");
+            const productId = event.target.getAttribute("data-product-id");
+            updateCartItem(cartItemId, productId, "increase");
+        }
+
+        if (event.target.classList.contains("decrease")) {
+            const cartItemId = event.target.getAttribute("data-id");
+            const productId = event.target.getAttribute("data-product-id");
+            updateCartItem(cartItemId, productId, "decrease");
+        }
+
+        if (event.target.classList.contains("remove-btn")) {
+            const cartItemId = event.target.getAttribute("data-id");
+            const productId = event.target.closest("tr").getAttribute("data-product-id");
+            removeCartItem(cartItemId, productId);
+        }
+    });
+
+    async function updateCartItem(cartItemId, productId, action) {
+        if (!token) {
+            console.error("Access token not found!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/update`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    cart_item_id: cartItemId,
+                    product_id: productId,
+                    action: action
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to update item: ${errorText}`);
+            }
+
+            const result = await response.json();
+            fetchCart();
+        } catch (error) {
+            console.error("Error updating cart item:", error);
+            alert(`An error occurred: ${error.message}`);
+        }
+    }
+
+    async function removeCartItem(cartItemId, productId) {
+        if (!token) {
+            console.error("Access token not found!");
+            return;
+        }
+
+        if (!productId) {
+            console.error("Product ID not found!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/remove`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    product_id: productId
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to remove item: ${errorText}`);
+            }
+
+            fetchCart();
+        } catch (error) {
+            console.error("Error removing cart item:", error);
+            alert(`An error occurred: ${error.message}`);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchCart);
+</script>
+
+
+
+
+
+ <!-- /Subscribe Footer Section --> 
+  <!-- Footer will be loaded here -->
+  <div id="footer-placeholder"></div>
+
+  <script>
+    // Load footer.html into the placeholder div
+    fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading footer:", error));
+</script>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script>
+    fetch("footer.html")
+      .then(response => response.text())
+      .then(data => document.getElementById("footer-placeholder").innerHTML = data)
+      .catch(error => console.error("Error loading the footer:", error));
+  </script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".quantity-control button").forEach(button => {
+            button.addEventListener("click", function () {
+                let input = this.parentElement.querySelector("input");
+                let value = parseInt(input.value);
+                if (this.classList.contains("increase")) {
+                    input.value = value + 1;
+                } else if (this.classList.contains("decrease") && value > 1) {
+                    input.value = value - 1;
+                }
+            });
+        });
+
+        document.querySelectorAll(".remove-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                this.closest("tr").remove();
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>
