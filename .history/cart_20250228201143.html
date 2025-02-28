@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Wishlist - Voltfood</title>
+    <title>Cart - Voltfood</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
@@ -113,22 +113,22 @@
             <li><a href="privacy-and-policy.html">PRIVACY & POLICY</a></li>
             <li><a href="contact.html">CONTACT US</a></li>
             <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                 <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
+                  <li><a href="#">Dropdown 1</a></li>
+                  <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul>
+                      <li><a href="#">Deep Dropdown 1</a></li>
+                      <li><a href="#">Deep Dropdown 2</a></li>
+                      <li><a href="#">Deep Dropdown 3</a></li>
+                      <li><a href="#">Deep Dropdown 4</a></li>
+                      <li><a href="#">Deep Dropdown 5</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#">Dropdown 2</a></li>
+                  <li><a href="#">Dropdown 3</a></li>
+                  <li><a href="#">Dropdown 4</a></li>
                 </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li> -->
+              </li> -->
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -138,82 +138,73 @@
     </header>
 
     <main class="main">
-      <!-- Wishlist Section -->
+      <!-- Cart Section -->
       <section
         id="testimonials"
-        class="testimonials section light-background bg-image"
+        class="testimonials section-inner light-background bg-image"
       >
+        <a href="menu.html"><button class="btn btn-back">Back</button></a>
         <div class="container mt-5">
-          <h3>Wishlist</h3>
-          <table class="table wishlist-table mt-4">
-            <thead class="border-bottom">
-              <tr>
-                <th><input type="checkbox" id="select-all" /></th>
-                <th></th>
-                <th></th>
-                <th>Product Name</th>
-                <th>Unit Price</th>
-                <th>Date Added</th>
-                <th>Stock Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="wishlist-table-body">
-              <!-- Wishlist items will be dynamically added here -->
-            </tbody>
-          </table>
-
-          <!-- <div class="wishlist-actions d-flex justify-content-between">
-                <select class="form-select w-25">
-                    <option>Actions</option>
-                </select>
-                <div>
-                    <button class="btn btn-cart">Apply Actions</button>
-                    <button class="btn btn-cart" id="add-selected-to-cart">Add selection to Cart</button>
-                    <button class="btn btn-cart" id="add-all-to-cart">Add all to Cart</button>
-                </div>
-            </div> -->
+          <div class="row">
+            <table class="cart-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="cart-table-body">
+                <!-- Cart items will be dynamically added here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-4">
+            <!-- Cart Totals Section -->
+            <div class="col-lg-8"></div>
+            <div class="col-lg-4">
+              <div class="cart-summary">
+                <h5>Cart Totals</h5>
+                <table class="table">
+                  <tr>
+                    <td>Subtotal</td>
+                    <td id="subtotal-amount">0.00 SR</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Order Total</strong></td>
+                    <td><strong id="order-total-amount">0.00 SR</strong></td>
+                  </tr>
+                </table>
+                <a href="checkout.html">
+                  <button class="btn proceed-btn w-100">
+                    Proceed to Checkout
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <!-- /Wishlist Section -->
-      <!-- Toast Container -->
+      <!-- /Cart Section -->
       <div id="toast-container" class="toast-container"></div>
     </main>
 
     <script>
-      const wishlistApiUrl = `${apiBaseUrl}wishlist`;
-      const removeWishlistApiUrl = `${apiBaseUrl}wishlist/remove`;
-      const cartApiUrl = `${apiBaseUrl}cart/add`;
+      const apiUrl = `${apiBaseUrl}cart`;
       const token = localStorage.getItem("accessToken");
 
-      // Function to show toast notifications
-      function showToast(message, type = "success") {
-        const toastContainer = document.getElementById("toast-container");
-        if (!toastContainer) {
-          console.error("Toast container not found!");
-          return;
-        }
-
-        const toast = document.createElement("div");
-        toast.className = `toast-message ${type}`;
-        toast.innerHTML = message;
-
-        toastContainer.appendChild(toast);
-
-        setTimeout(() => {
-          toast.remove();
-        }, 3000);
-      }
-
-      // Function to fetch and display wishlist items
-      async function fetchWishlist() {
+      // Function to fetch and display the cart items and calculate total price
+      async function fetchCart() {
         if (!token) {
           console.error("Access token not found!");
           return;
         }
 
         try {
-          const response = await fetch(wishlistApiUrl, {
+          const response = await fetch(apiUrl, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -223,162 +214,179 @@
 
           const result = await response.json();
 
-          if (
-            response.ok &&
-            result.status === 200 &&
-            result.data.wishlist.length > 0
-          ) {
-            const wishlistTableBody = document.querySelector(
-              ".wishlist-table tbody"
-            );
-            wishlistTableBody.innerHTML = "";
+          if (result.status === 200 && result.data.cart.length > 0) {
+            const cartTableBody = document.querySelector(".cart-table tbody");
+            cartTableBody.innerHTML = ""; // Clear previous content
 
-            result.data.wishlist.forEach((item) => {
-              const product = item.product;
+            let totalCartPrice = 0; // Store total price
+
+            result.data.cart.forEach((cartItem) => {
+              const product = cartItem.product;
+              const itemTotal = parseFloat(product.price) * cartItem.quantity;
+              totalCartPrice += itemTotal; // Add to total price
 
               const row = document.createElement("tr");
+              row.setAttribute("data-product-id", product.id); // Store product_id in row
+
               row.innerHTML = `
-                        <td><input type="checkbox" class="wishlist-checkbox" data-id="${
-                          product.id
-                        }"></td>
+                        <td> <img src="${imgBaseUrl}${
+                product.productImage
+              }" alt="${product.title}" style=""></td>
+                        <td>${product.name}</td>
+                        <td>${product.price} SR</td>
+                        <td>
+                            <div class="quantity-control">
+                                <button class="decrease" data-product-id="${
+                                  product.id
+                                }">-</button>
+                                <input type="text" class="quantity-input" value="${
+                                  cartItem.quantity
+                                }" data-product-id="${product.id}" readonly>
+                                <button class="increase" data-product-id="${
+                                  product.id
+                                }">+</button>
+                            </div>
+                        </td>
+                        <td class="item-total">${itemTotal.toFixed(2)} SR</td>
                         <td><span class="remove-btn" data-product-id="${
                           product.id
                         }">&times;</span></td>
-                        <td> <img src="${imgBaseUrl}${
-                product.productImage
-              }"  alt="${product.title}"   style=""></td>
-                        <td>${product.name}</td>
-                        <td>${product.price}</td>
-                        <td>${item.createdAt.split("T")[0]}</td>
-                        <td>${
-                          product.stock ? product.stock : "Out of Stock"
-                        }</td>
-                        <td><button class="btn btn-cart add-to-cart" data-product-id="${
-                          product.id
-                        }">Add to Cart</button></td>
                     `;
 
-              wishlistTableBody.appendChild(row);
+              cartTableBody.appendChild(row);
             });
 
-            // Attach event listeners after content is loaded
-            attachWishlistEventListeners();
+            // Update cart totals
+            updateCartTotal(totalCartPrice);
           } else {
-            document.querySelector(".wishlist-table tbody").innerHTML =
-              "<tr><td colspan='8'>Your wishlist is empty.</td></tr>";
+            document.querySelector(".cart-table tbody").innerHTML =
+              "<tr><td colspan='6'>Your cart is empty.</td></tr>";
+            updateCartTotal(0);
           }
         } catch (error) {
-          console.error("Error fetching wishlist:", error);
-          document.querySelector(".wishlist-table tbody").innerHTML =
-            "<tr><td colspan='8'>Failed to load wishlist.</td></tr>";
+          console.error("Error fetching cart:", error);
+          document.querySelector(".cart-table tbody").innerHTML =
+            "<tr><td colspan='6'>Failed to load cart.</td></tr>";
+          updateCartTotal(0);
         }
       }
 
-      // Function to attach event listeners for remove and add-to-cart buttons
-      function attachWishlistEventListeners() {
-        document.querySelectorAll(".remove-btn").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const productId = this.getAttribute("data-product-id");
-            removeWishlistItem(productId);
-          });
-        });
-
-        document.querySelectorAll(".add-to-cart").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const productId = this.getAttribute("data-product-id");
-            addToCart(productId, 1);
-          });
-        });
+      // Function to update Subtotal and Order Total
+      function updateCartTotal(totalPrice) {
+        document.getElementById(
+          "subtotal-amount"
+        ).innerText = `${totalPrice.toFixed(2)} SR`;
+        document.getElementById(
+          "order-total-amount"
+        ).innerText = `${totalPrice.toFixed(2)} SR`;
       }
 
-      // Function to remove an item from the wishlist
-      async function removeWishlistItem(productId) {
-        if (!token) {
-          console.error("Access token not found!");
-          return;
-        }
-
-        if (!productId) {
-          console.error("Product ID is missing!");
-          showToast("Product ID is missing.", "error");
-          return;
-        }
-
-        try {
-          const response = await fetch(removeWishlistApiUrl, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ product_id: productId }),
-          });
-
-          const result = await response.json();
-
-          if (response.ok && result.status === 200) {
-            showToast("Item removed from wishlist!");
-            fetchWishlist(); // Refresh wishlist
-          } else {
-            showToast(
-              `Failed to remove item: ${result.message || "Unknown error"}`,
-              "error"
+      // Event delegation for quantity updates and removal
+      document
+        .querySelector(".cart-table tbody")
+        .addEventListener("click", function (event) {
+          if (
+            event.target.classList.contains("increase") ||
+            event.target.classList.contains("decrease")
+          ) {
+            const productId = event.target.getAttribute("data-product-id");
+            updateCartItem(
+              productId,
+              event.target.classList.contains("increase")
+                ? "increase"
+                : "decrease"
             );
           }
-        } catch (error) {
-          console.error("Error removing wishlist item:", error);
-          showToast("An error occurred while removing the item.", "error");
-        }
-      }
 
-      // Function to add an item from wishlist to cart
-      async function addToCart(productId, quantity) {
+          if (event.target.classList.contains("remove-btn")) {
+            const productId = event.target.getAttribute("data-product-id");
+            removeCartItem(productId);
+          }
+        });
+
+      // Function to update item quantity using PUT method
+      async function updateCartItem(productId, action) {
         if (!token) {
           console.error("Access token not found!");
           return;
         }
 
-        if (!productId) {
-          console.error("Product ID is missing!");
-          showToast("Product ID is missing.", "error");
-          return;
+        const inputField = document.querySelector(
+          `input.quantity-input[data-product-id="${productId}"]`
+        );
+        let currentQuantity = parseInt(inputField.value);
+
+        if (action === "increase") {
+          currentQuantity += 1;
+        } else if (action === "decrease") {
+          if (currentQuantity <= 1) {
+            alert("Quantity must be at least 1.");
+            return;
+          }
+          currentQuantity -= 1;
         }
 
         try {
-          const response = await fetch(cartApiUrl, {
-            method: "POST",
+          const response = await fetch(`${apiUrl}/update`, {
+            method: "PUT", // Correct method
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               product_id: productId,
-              quantity: quantity.toString(), // Ensure quantity is sent
+              quantity: currentQuantity, // Correct payload
             }),
           });
 
           const result = await response.json();
 
-          if (response.ok && result.status === 200) {
-            showToast("Item added to cart successfully!");
-            removeWishlistItem(productId); // Remove from wishlist after adding to cart
+          if (response.ok) {
+            fetchCart(); // Refresh cart after update
           } else {
-            showToast(
-              `Failed to add to cart: ${result.message || "Unknown error"}`,
-              "error"
-            );
+            alert(`Failed to update item: ${JSON.stringify(result)}`);
           }
         } catch (error) {
-          console.error("Error adding item to cart:", error);
-          showToast(
-            "An error occurred while adding the item to the cart.",
-            "error"
-          );
+          console.error("Error updating cart item:", error);
+          alert("An error occurred while updating the item quantity.");
         }
       }
 
-      // Load the wishlist when the page loads
-      document.addEventListener("DOMContentLoaded", fetchWishlist);
+      // Function to remove item from cart
+      async function removeCartItem(productId) {
+        if (!token) {
+          console.error("Access token not found!");
+          return;
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/remove`, {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ product_id: productId }),
+});
+
+const result = await response.json();
+console.log("API Response:", result); // Log full response
+
+if (!response.ok) {
+  throw new Error(`API Error: ${result.message || response.statusText}`);
+} else {
+            alert(
+              `Failed to remove item: ${result.message || "Unknown error"}`
+            );
+          }
+        } catch (error) {
+          console.error("Error removing cart item:", error);
+          alert("An error occurred while removing the item from the cart.");
+        }
+      }
+
+      // Load the cart when the page loads
+      document.addEventListener("DOMContentLoaded", fetchCart);
     </script>
 
     <!-- /Subscribe Footer Section -->

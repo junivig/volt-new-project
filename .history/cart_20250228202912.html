@@ -350,48 +350,37 @@
       
         // Function to remove item from cart
         async function removeCartItem(productId) {
-    if (!token) {
-        console.error("Access token not found!");
-        return;
-    }
-
-    if (!productId) {
-        console.error("Product ID is missing!");
-        showToast("Product ID is missing.", "error");
-        return;
-    }
-
-    try {
-        const response = await fetch(`${apiUrl}/remove`, {
-            method: "POST",
-            headers: {
+          if (!token) {
+            console.error("Access token not found!");
+            return;
+          }
+      
+          try {
+            const response = await fetch(`${apiUrl}/remove`, {
+              method: "POST",
+              headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ product_id: productId }),
-        });
-
-        const result = await response.json();
-
-        if (response.ok && result.status === 200) {
-            showToast("Item removed from cart!"); // Show toast message
-            fetchCart(); // Refresh the cart after removal
-        } else {
-            showToast(`Failed to remove item: ${result.message || "Unknown error"}`, "error");
+              },
+              body: JSON.stringify({ product_id: productId }),
+            });
+      
+            const result = await response.json();
+            console.log("API Response:", result); 
+      
+            if (!response.ok) {
+                showToast("Item removed successfully!", "success");
+                fetchCart();
+            } else {
+              
+              showToast(`Failed: ${result.message || response.statusText}`, "error");
+              
+            }
+          } catch (error) {
+            console.error("Error removing cart item:", error);
+            showToast("An error occurred while removing the item.", "error");
+          }
         }
-    } catch (error) {
-        console.error("Error removing cart item:", error);
-        showToast("An error occurred while removing the item.", "error");
-    }
-}
-
-// Attach event listeners for remove buttons
-document.querySelector(".cart-table tbody").addEventListener("click", function (event) {
-    if (event.target.classList.contains("remove-btn")) {
-        const productId = event.target.getAttribute("data-product-id");
-        removeCartItem(productId);
-    }
-});
       
         // Load the cart when the page loads
         document.addEventListener("DOMContentLoaded", fetchCart);
