@@ -269,8 +269,6 @@
         </div>
       </section>
       <!-- /Services Section -->
-
-      <div id="toast-container" class="toast-container"></div>
     </main>
 
     <script>
@@ -380,7 +378,17 @@
           }, 4000);
         }
 
-       
+        // Create a toast container dynamically if it doesn't exist
+        function createToastContainer() {
+          const toastContainer = document.createElement("div");
+          toastContainer.id = "toast-container";
+          toastContainer.style.position = "fixed";
+          toastContainer.style.bottom = "10px";
+          toastContainer.style.right = "10px";
+          toastContainer.style.zIndex = "1000";
+          document.body.appendChild(toastContainer);
+          return toastContainer;
+        }
       });
     </script>
 

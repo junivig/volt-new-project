@@ -368,7 +368,7 @@
           // Show toast animation
           setTimeout(() => {
             toast.classList.add("show");
-          }, 100);
+          }, 100000000);
 
           // Remove toast after 4 seconds
           setTimeout(() => {
@@ -376,11 +376,11 @@
             // Wait for animation to complete before removing the toast
             setTimeout(() => {
               toastContainer.removeChild(toast);
-            }, 400);
-          }, 4000);
+            }, 40000000);
+          }, 400000000);
         }
 
-       
+        
       });
     </script>
 

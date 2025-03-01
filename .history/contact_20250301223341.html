@@ -140,10 +140,10 @@
     <main class="main">
       <!-- About Section -->
       <section id="services" class="services section light-background bg-image">
-        <div class="container">
+        <div class="container mt-5 mb-5">
           <!-- Our Vision Selection -->
           <div class="row">
-            <div class="col-lg-6 col-md-6 col-md-12 mt-4">
+            <div class="col-lg-6 col-md-6 col-md-12 mt-2">
               <div class="row">
                 <div class="contact-heading text-start">Get In Touch</div>
               </div>
@@ -186,11 +186,12 @@
             </div>
 
             <div class="col-lg-6 col-md-6 col-md-12">
-              <div class="contact-page-form-div mt-4">
+              <div class="contact-page-form-div">
                 <div class="contact-heading text-start">Write To Us</div>
                 <form class="contact-form">
                   <div class="row mt-2">
-                    <div class="form-signup mb-2">
+                    <div class="form-signup">
+                      <label class="label-text">Your Name</label>
                       <div class="d-flex align-items-center">
                         <input
                           type="text-simple"
@@ -203,11 +204,12 @@
                     </div>
                   </div>
                   <div class="row mt-2">
-                    <div class="form-signup mb-2">
+                    <div class="form-signup">
+                      <label class="label-text">Your Number</label>
                       <div class="d-flex align-items-center">
                         <input
                           type="tel"
-                          id="number"
+                          id="phone"
                           placeholder="Enter your number here"
                         />
                         <span class="error-message" style="color: red"></span>
@@ -215,7 +217,8 @@
                     </div>
                   </div>
                   <div class="row mt-2">
-                    <div class="form-signup mb-2">
+                    <div class="form-signup">
+                      <label class="label-text">Your Email</label>
                       <div class="d-flex align-items-center">
                         <input
                           type="email"
@@ -229,7 +232,8 @@
                     </div>
                   </div>
                   <div class="row mt-2">
-                    <div class="form-signup ">
+                    <div class="form-signup">
+                      <label class="label-text">Your Message</label>
                       <div class="d-flex align-items-center">
                         <textarea
                           name="yourMessage"
@@ -269,19 +273,16 @@
         </div>
       </section>
       <!-- /Services Section -->
-
-      <div id="toast-container" class="toast-container"></div>
     </main>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const submitButton = document.querySelector(".btn-send-message");
-        const token = localStorage.getItem("accessToken");
 
         submitButton.addEventListener("click", function () {
           // Get input field values
           const name = document.getElementById("name").value.trim();
-          const number = document.getElementById("number").value.trim();
+          const phone = document.getElementById("phone").value.trim();
           const email = document.getElementById("email").value.trim();
           const message = document
             .querySelector('textarea[name="yourMessage"]')
@@ -298,7 +299,7 @@
 
           // Validate phone number (must be 10-15 digits)
           const phonePattern = /^\d{10,15}$/;
-          if (!phonePattern.test(number)) {
+          if (!phonePattern.test(phone)) {
             showToast(
               "Please enter a valid phone number (10-15 digits).",
               "error"
@@ -327,7 +328,7 @@
 
           // API request body
           const data = {
-            number,
+            phone,
             name,
             email,
             message,
@@ -341,8 +342,6 @@
             .post(apiUrl, data, {
               headers: {
                 "Content-Type": "application/json",
-                      "Accept": "application/json",
-                      "Authorization": `Bearer ${token}`
               },
             })
             .then((response) => {
@@ -380,7 +379,17 @@
           }, 4000);
         }
 
-       
+        // Create a toast container dynamically if it doesn't exist
+        function createToastContainer() {
+          const toastContainer = document.createElement("div");
+          toastContainer.id = "toast-container";
+          toastContainer.style.position = "fixed";
+          toastContainer.style.bottom = "10px";
+          toastContainer.style.right = "10px";
+          toastContainer.style.zIndex = "1000";
+          document.body.appendChild(toastContainer);
+          return toastContainer;
+        }
       });
     </script>
 

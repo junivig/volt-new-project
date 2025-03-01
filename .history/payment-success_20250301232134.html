@@ -151,13 +151,15 @@
         </div>
         <!-- End Section Title -->
 
-        <div class="mt-5 text-center">
-          <a href="my-account.html"
+        <!-- <div class="mt-5 text-center">
+          <a href="order-detail.html"
             ><button type="button" class="btn btn-add-new">
-              Orders Details
+              Order Details
             </button></a
-          >
-        
+          > -->
+          <a href="order-detail.html?order_id=${order.id}">
+            <button class="btn btn-add-new">Order Details</button>
+        </a>
         </div>
       </section>
       <!-- /Services Section -->
@@ -288,6 +290,97 @@
     </script>
 
 
+<!-- Get All Orders API Implementation here -->
+<script>
+  document.addEventListener("DOMContentLoaded", fetchOrders);
+
+  async function fetchOrders() {
+      const apiUrl = "https://api.voltfood.co/api/orders"; // Replace with correct API endpoint
+      const token = localStorage.getItem("accessToken");
+
+      if (!token) {
+          console.error("❌ No access token found!");
+          showError("You are not authorized. Please log in.");
+          return;
+      }
+
+      try {
+          console.log("📡 Fetching orders from:", apiUrl);
+
+          const response = await fetch(apiUrl, {
+              method: "GET",
+              headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              }
+          });
+
+          const result = await response.json();
+          console.log("📢 API Response:", result);
+
+          if (response.ok && result.data.orders.length > 0) {
+              populateOrdersTable(result.data.orders);
+          } else {
+              showError("No orders found.");
+          }
+      } catch (error) {
+          console.error("🚨 Error fetching orders:", error);
+          showError("Failed to load orders. Please try again.");
+      }
+  }
+
+  function populateOrdersTable(orders) {
+  const ordersTableBody = document.getElementById("orders-table-body");
+  const ordersTable = document.getElementById("orders-table");
+  const loadingMessage = document.getElementById("loading-message");
+  const errorMessage = document.getElementById("error-message");
+
+  if (!ordersTableBody || !ordersTable || !loadingMessage || !errorMessage) {
+      console.error("🚨 Missing table elements in DOM.");
+      return;
+  }
+
+  ordersTableBody.innerHTML = ""; // Clear previous entries
+
+  orders.forEach(order => {
+      console.log("🔹 Order Details:", order); // Debug log
+
+      const totalAmount = order.total_amount || "N/A"; // Use total_amount instead
+      const currency = order.currency || "SR"; // Use default currency if missing
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+          <td><a href="#" class="order-id">#${order.id}</a></td>
+          <td>${formatDate(order.createdAt)}</td>
+          <td>${order.status}</td>
+          <td><strong>${totalAmount} ${currency}</strong></td>
+          <td>
+              <a href="order-detail.html?order_id=${order.id}">
+                  <button class="btn btn-view">View</button>
+              </a>
+          </td>
+      `;
+      console.log("✅ Order ID:", order.id);
+      ordersTableBody.appendChild(row);
+  });
+
+  ordersTable.style.display = "table";
+  loadingMessage.style.display = "none";
+  errorMessage.style.display = "none";
+}
+
+  function showError(message) {
+      document.getElementById("loading-message").style.display = "none";
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.innerText = message;
+      errorMessage.style.display = "block";
+  }
+
+  function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+</script>
 
     <!-- Scroll Top -->
     <a

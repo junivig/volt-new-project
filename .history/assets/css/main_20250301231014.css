@@ -2800,11 +2800,11 @@ a {
   bottom: 10px; 
   right: 10px; 
   z-index: 1000; 
-  background-color:#BCD531; 
+  background-color:#fff; 
   color:#000; 
-  padding: 2%;
+  padding: 1%;
   border-radius: 5px;
-  border: 2px solid #BCD531;
+  
 }
 .timer {
   font-size: 14px;

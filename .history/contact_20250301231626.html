@@ -363,24 +363,17 @@
           const toast = document.createElement("div");
           toast.className = `toast ${type}`; // Add class for styling (info/success/error)
           toast.innerText = message;
+          
+          // Append toast to container
           toastContainer.appendChild(toast);
-
-          // Show toast animation
+      
+          // Remove toast after 3 seconds
           setTimeout(() => {
-            toast.classList.add("show");
-          }, 100);
-
-          // Remove toast after 4 seconds
-          setTimeout(() => {
-            toast.classList.remove("show");
-            // Wait for animation to complete before removing the toast
-            setTimeout(() => {
-              toastContainer.removeChild(toast);
-            }, 400);
-          }, 4000);
+            toast.remove();
+          }, 3000);
         }
 
-       
+        
       });
     </script>
 
