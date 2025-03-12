@@ -555,15 +555,7 @@
       });
   }
 
-  document.getElementById('saved-address').addEventListener('change', function () {
-    if (this.value === "new") {
-        window.location.href = 'my-account.html'; // Redirect if "New Address" is selected
-    } else {
-        populateAddressFields();
-    }
-});
-
-function populateAddressDropdown(addresses) {
+  function populateAddressDropdown(addresses) {
     const addressDropdown = document.getElementById('saved-address');
     addressDropdown.innerHTML = '<option value="">Select an Address</option>';
 

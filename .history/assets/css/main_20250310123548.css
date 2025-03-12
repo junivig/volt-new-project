@@ -1025,7 +1025,7 @@ section-inner,
 
 @media (max-width: 640px) {
   .hero {
-    padding: 40px 15px 40px 15px;
+    padding: 40px 10px 40px 10px;
 
   }
   .hero h1 {
@@ -1204,12 +1204,7 @@ section-inner,
   font-weight: 500;
   font-size: 14px;
 }
-@media (max-width: 640px) {
-  .featured-services {
-    padding: 30px 15px 30px 15px;
 
-  }
-}
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
@@ -1291,10 +1286,6 @@ section-inner,
 }
 
 @media (max-width: 640px) {
-  .about {
-    padding: 30px 15px 30px 15px;
-
-  }
   .about h1 {
     font-size: 28px;
     line-height: 36px;
@@ -2942,12 +2933,7 @@ a {
 {
   display: none;
 }
-.product-home-img
-{
-  width: 90%;
-  border-radius:50%;
-  
-}
+
 
 
 
@@ -2962,11 +2948,7 @@ a {
 
 
 @media screen and (min-width: 480px) {
-  .product-home-img {
-    width: 50%;
-    border-radius: 50%;
-}
-section, .section {
-  padding: 30px 15px 30px 15px;
-}
+  body {
+    background-color: lightgreen;
+  }
 }

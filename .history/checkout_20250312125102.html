@@ -555,44 +555,22 @@
       });
   }
 
-  document.getElementById('saved-address').addEventListener('change', function () {
-    if (this.value === "new") {
-        window.location.href = 'my-account.html'; // Redirect if "New Address" is selected
-    } else {
-        populateAddressFields();
-    }
-});
+  function populateAddressDropdown(addresses) {
+      const addressDropdown = document.getElementById('saved-address');
+      addressDropdown.innerHTML = '<option value="">Select an Address</option>';
 
-function populateAddressDropdown(addresses) {
-    const addressDropdown = document.getElementById('saved-address');
-    addressDropdown.innerHTML = '<option value="">Select an Address</option>';
+      if (addresses.length === 0) {
+          document.getElementById('add-address-btn').style.display = 'block'; // Show "Add Address" button
+          return;
+      }
 
-    // Add "New Address" option
-    const newAddressOption = document.createElement('option');
-    newAddressOption.value = "new";
-    newAddressOption.textContent = "New Address";
-    addressDropdown.appendChild(newAddressOption);
-
-    if (addresses.length === 0) {
-        document.getElementById('add-address-btn').style.display = 'block'; // Show "Add Address" button
-        return;
-    }
-
-    addresses.forEach(address => {
-        const option = document.createElement('option');
-        option.value = JSON.stringify(address); // Store address details in value
-        option.textContent = address.type; // Show "Home" or "Office"
-        addressDropdown.appendChild(option);
-    });
-}
-
-document.getElementById('saved-address').addEventListener('change', function () {
-    if (this.value === "new") {
-        window.location.href = 'my-account.html'; // Redirect if "New Address" is selected
-    } else {
-        populateAddressFields();
-    }
-});
+      addresses.forEach(address => {
+          const option = document.createElement('option');
+          option.value = JSON.stringify(address); // Store address details in value
+          option.textContent = address.type; // Show "Home" or "Office"
+          addressDropdown.appendChild(option);
+      });
+  }
 
   function populateAddressFields() {
       const selectedAddress = document.getElementById('saved-address').value;

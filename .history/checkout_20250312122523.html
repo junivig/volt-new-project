@@ -195,35 +195,38 @@
                   />
 
                   <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label for="saved-address" class="mb-2">Choose Address</label>
+                    <div class="col-md-6">
+                        <label for="saved-address">Choose Address</label>
                         <select id="saved-address" class="form-select" onchange="populateAddressFields()">
                             <option value="">Select an Address</option>
-                            <a href="my-account.html"><option value="">New Address</option></a>
                             <!-- Addresses will be dynamically inserted here -->
                         </select>
                     </div>
                 </div>
                 
                 <div id="address-fields" style="display: none;">
-
-                    <div class="row">
-                      <div class="col-6">
-                        <input type="text" id="zip-code" class="form-control mb-3" placeholder="Flat" readonly />
-                      </div>
-                      <div class="col-6">
-                        <input type="text" id="building" class="form-control mb-3" placeholder="Building" readonly />
-                      </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <select id="country" class="form-select" required>
+                                <option value="">Select Country</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                <option value="Qatar">Qatar</option>
+                                <option value="Egypt">Egypt</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="city" class="form-select" required>
+                                <option value="">Select City</option>
+                                <option value="Cairo">Cairo</option>
+                                <option value="Riyadh">Riyadh</option>
+                                <option value="Doha">Doha</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="row">
-                      <div class="col-6">
-                        <input type="text" id="area" class="form-control mb-3" placeholder="Area" readonly />
-                      </div>
-                      <div class="col-6">
-                        <input type="text" id="state" class="form-control mb-3" placeholder="City" readonly />
-                      </div>
-                    </div>                   
-                              <input type="text" id="street-address" class="form-control mb-3" placeholder="Country" readonly />
+                
+                    <input type="text" id="street-address" class="form-control mb-3" placeholder="Street Address"/>
+                    <input type="text" id="state" class="form-control mb-3" placeholder="State"/>
+                    <input type="text" id="zip-code" class="form-control mb-3" placeholder="Zip Code"/>
                 </div>
                 
                 <button id="add-address-btn" class="btn btn-primary mt-3" style="display: none;" onclick="redirectToAddressPage()">
@@ -555,44 +558,22 @@
       });
   }
 
-  document.getElementById('saved-address').addEventListener('change', function () {
-    if (this.value === "new") {
-        window.location.href = 'my-account.html'; // Redirect if "New Address" is selected
-    } else {
-        populateAddressFields();
-    }
-});
+  function populateAddressDropdown(addresses) {
+      const addressDropdown = document.getElementById('saved-address');
+      addressDropdown.innerHTML = '<option value="">Select an Address</option>';
 
-function populateAddressDropdown(addresses) {
-    const addressDropdown = document.getElementById('saved-address');
-    addressDropdown.innerHTML = '<option value="">Select an Address</option>';
+      if (addresses.length === 0) {
+          document.getElementById('add-address-btn').style.display = 'block'; // Show "Add Address" button
+          return;
+      }
 
-    // Add "New Address" option
-    const newAddressOption = document.createElement('option');
-    newAddressOption.value = "new";
-    newAddressOption.textContent = "New Address";
-    addressDropdown.appendChild(newAddressOption);
-
-    if (addresses.length === 0) {
-        document.getElementById('add-address-btn').style.display = 'block'; // Show "Add Address" button
-        return;
-    }
-
-    addresses.forEach(address => {
-        const option = document.createElement('option');
-        option.value = JSON.stringify(address); // Store address details in value
-        option.textContent = address.type; // Show "Home" or "Office"
-        addressDropdown.appendChild(option);
-    });
-}
-
-document.getElementById('saved-address').addEventListener('change', function () {
-    if (this.value === "new") {
-        window.location.href = 'my-account.html'; // Redirect if "New Address" is selected
-    } else {
-        populateAddressFields();
-    }
-});
+      addresses.forEach(address => {
+          const option = document.createElement('option');
+          option.value = JSON.stringify(address); // Store address details in value
+          option.textContent = address.type; // Show "Home" or "Office"
+          addressDropdown.appendChild(option);
+      });
+  }
 
   function populateAddressFields() {
       const selectedAddress = document.getElementById('saved-address').value;
@@ -604,8 +585,6 @@ document.getElementById('saved-address').addEventListener('change', function () 
       const address = JSON.parse(selectedAddress);
       document.getElementById('street-address').value = address.street || "";
       document.getElementById('state').value = address.block || "";
-      document.getElementById('area').value = address.area || "";
-      document.getElementById('building').value = address.building || "";
       document.getElementById('zip-code').value = address.flat || "";
       document.getElementById('address-fields').style.display = 'block';
   }
@@ -614,7 +593,6 @@ document.getElementById('saved-address').addEventListener('change', function () 
       window.location.href = 'address.html'; // Redirect to address page
   }
 </script>
-
 
     <!-- Scroll Top -->
     <a

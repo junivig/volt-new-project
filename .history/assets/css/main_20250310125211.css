@@ -2942,12 +2942,7 @@ a {
 {
   display: none;
 }
-.product-home-img
-{
-  width: 90%;
-  border-radius:50%;
-  
-}
+
 
 
 
@@ -2962,11 +2957,7 @@ a {
 
 
 @media screen and (min-width: 480px) {
-  .product-home-img {
-    width: 50%;
-    border-radius: 50%;
-}
-section, .section {
-  padding: 30px 15px 30px 15px;
-}
+  body {
+    background-color: lightgreen;
+  }
 }
